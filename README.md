@@ -9,7 +9,7 @@ BOHUCO POS Backend is a robust ASP.NET Core Web API that powers the BOHUCO POS r
 ## Tech Stack
 
 - **Framework**: ASP.NET Core 10
-- **Language**: C# 12
+- **Language**: C# 14
 - **Database**: PostgreSQL 16
 - **ORM**: Entity Framework Core 10
 - **Messaging**: MediatR (CQRS pattern)
