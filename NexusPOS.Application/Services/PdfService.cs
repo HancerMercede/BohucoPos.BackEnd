@@ -48,7 +48,7 @@ public class PdfService : IPdfService
             {
                 row.RelativeItem().Column(c =>
                 {
-                    c.Item().Text($"Mesa: {billData.Location}");
+                    c.Item().Text(billData.Location);
                     c.Item().Text($"Cliente: {billData.CustomerName}");
                     c.Item().Text($"Ubicación: {billData.Location}");
                 });
