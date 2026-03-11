@@ -74,7 +74,8 @@ public class TabsController(IMediator mediator, IPdfService pdfService) : Contro
                 ProductName = i.ProductName,
                 Quantity = i.Quantity,
                 UnitPrice = i.UnitPrice,
-                Notes = i.Notes
+                Notes = i.Notes,
+                Destination = i.Destination.ToString()
             }).ToList()
         };
 

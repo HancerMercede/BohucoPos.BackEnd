@@ -12,6 +12,10 @@ public class TabBillData
     public decimal Subtotal { get; set; }
     public decimal Tax { get; set; }
     public decimal Total { get; set; }
+    public string? InvoiceNumber { get; set; }
+    public string? Ncf { get; set; }
+    public string? PaymentMethod { get; set; }
+    public string? BusinessRnc { get; set; }
 }
 
 public class BillItem
@@ -20,5 +24,6 @@ public class BillItem
     public int Quantity { get; init; }
     public decimal UnitPrice { get; init; }
     public string? Notes { get; init; }
+    public string? Destination { get; init; }
     public decimal Total => Quantity * UnitPrice;
 }
