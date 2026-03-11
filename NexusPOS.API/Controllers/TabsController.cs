@@ -83,7 +83,7 @@ public class TabsController(IMediator mediator, IPdfService pdfService) : Contro
         billData.Total = billData.Subtotal + billData.Tax;
 
         var pdfBytes = pdfService.GenerateBillPdf(billData);
-        return File(pdfBytes, "application/pdf", "cuenta_" + billData.TabId + ".pdf");
+        return File(pdfBytes, "application/pdf", "cuenta_" + billData.Location + ".pdf");
     }
 }
 
