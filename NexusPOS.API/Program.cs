@@ -3,12 +3,11 @@ using MediatR;
 using NexusPOS.Application.Commands.CreateOrder;
 using NexusPOS.Application.Interfaces;
 using NexusPOS.Application.Services;
+using NexusPOS.Application.Hubs;
 using NexusPOS.Domain.Entities;
 using NexusPOS.Infrastructure.Data;
 using NexusPOS.Infrastructure.Repositories;
 using NexusPOS.Infrastructure.UnitOfWork;
-using NexusPOS.API.Hubs;
-using NexusPOS.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +22,7 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddScoped<IOrderRoutingService, OrderRoutingService>();
 builder.Services.AddScoped<INotificationService, SignalRNotificationService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddSignalR();
 builder.Services.AddControllers()

@@ -6,16 +6,18 @@ using NexusPOS.Application.Commands.CloseTab;
 using NexusPOS.Application.Commands.OpenTab;
 using NexusPOS.Application.Commands.RequestBill;
 using NexusPOS.Application.DTOs;
+using NexusPOS.Application.Interfaces;
 using NexusPOS.Application.Queries.GetActiveTabsByLocation;
 using NexusPOS.Application.Queries.GetOpenTables;
 using NexusPOS.Application.Queries.GetTabDetails;
+using NexusPOS.Application.Services;
 using NexusPOS.Domain.Enums;
 
 namespace NexusPOS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TabsController(IMediator mediator) : ControllerBase
+public class TabsController(IMediator mediator, IPdfService pdfService) : ControllerBase
 {
     [HttpPost]
     public async Task<int> OpenTab([FromBody] OpenTabCommand command, CancellationToken ct)
@@ -47,20 +49,42 @@ public class TabsController(IMediator mediator) : ControllerBase
 
     [HttpPost("{tabId:int}/close")]
     public async Task<Unit> CloseTab(int tabId, [FromBody] CloseTabDto dto, CancellationToken ct)
-        => await mediator.Send(new CloseTabCommand 
-        { 
-            TabId = tabId, 
-            PaymentMethod = dto.PaymentMethod,
-            DirectClose = dto.DirectClose 
-        }, ct);
+        => await mediator.Send(new CloseTabCommand { TabId = tabId, PaymentMethod = dto.PaymentMethod, DirectClose = dto.DirectClose }, ct);
 
     [HttpPost("{tabId:int}/cancel")]
     public async Task<Unit> CancelTab(int tabId, [FromBody] CancelTabDto? dto, CancellationToken ct)
-        => await mediator.Send(new CancelTabCommand 
-        { 
-            TabId = tabId,
-            Reason = dto?.Reason 
-        }, ct);
+        => await mediator.Send(new CancelTabCommand { TabId = tabId, Reason = dto?.Reason }, ct);
+
+    [HttpGet("{tabId:int}/pdf")]
+    public async Task<IActionResult> GetBillPdf(int tabId, CancellationToken ct)
+    {
+        var tabDto = await mediator.Send(new GetTabDetailsQuery(tabId), ct);
+        if (tabDto == null) return NotFound();
+
+        var billData = new TabBillData
+        {
+            TabId = tabDto.IdDisplay,
+            CustomerName = tabDto.CustomerName,
+            Location = tabDto.Location,
+            WaiterName = tabDto.WaiterName ?? "Mesero",
+            OpenedAt = tabDto.OpenedAt,
+            RequestedAt = DateTime.UtcNow,
+            Items = tabDto.Orders.SelectMany(o => o.Items).Select(i => new BillItem
+            {
+                ProductName = i.ProductName,
+                Quantity = i.Quantity,
+                UnitPrice = i.UnitPrice,
+                Notes = i.Notes
+            }).ToList()
+        };
+
+        billData.Subtotal = billData.Items.Sum(i => i.Total);
+        billData.Tax = billData.Subtotal * 0.18m;
+        billData.Total = billData.Subtotal + billData.Tax;
+
+        var pdfBytes = pdfService.GenerateBillPdf(billData);
+        return File(pdfBytes, "application/pdf", "cuenta_" + billData.TabId + ".pdf");
+    }
 }
 
 public record CloseTabDto(PaymentMethod PaymentMethod, bool DirectClose = false);
