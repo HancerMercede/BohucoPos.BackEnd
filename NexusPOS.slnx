@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="NexusPOS.API/NexusPOS.API.csproj" />
+  <Project Path="NexusPOS.Application/NexusPOS.Application.csproj" />
+  <Project Path="NexusPOS.Domain/NexusPOS.Domain.csproj" />
+  <Project Path="NexusPOS.Infrastructure/NexusPOS.Infrastructure.csproj" />
+</Solution>

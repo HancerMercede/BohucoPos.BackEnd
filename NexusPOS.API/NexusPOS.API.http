@@ -1,0 +1,6 @@
+@NexusPOS.API_HostAddress = http://localhost:5062
+
+GET {{NexusPOS.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

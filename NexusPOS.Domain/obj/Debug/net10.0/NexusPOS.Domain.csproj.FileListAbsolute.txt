@@ -1,0 +1,11 @@
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\bin\Debug\net10.0\NexusPOS.Domain.deps.json
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\bin\Debug\net10.0\NexusPOS.Domain.dll
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\bin\Debug\net10.0\NexusPOS.Domain.pdb
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\obj\Debug\net10.0\NexusPOS.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\obj\Debug\net10.0\NexusPOS.Domain.AssemblyInfoInputs.cache
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\obj\Debug\net10.0\NexusPOS.Domain.AssemblyInfo.cs
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\obj\Debug\net10.0\NexusPOS.Domain.csproj.CoreCompileInputs.cache
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\obj\Debug\net10.0\NexusPOS.Domain.dll
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\obj\Debug\net10.0\refint\NexusPOS.Domain.dll
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\obj\Debug\net10.0\NexusPOS.Domain.pdb
+C:\Users\HANCER MERCEDE\source\repos\NexusPOS.Domain\obj\Debug\net10.0\ref\NexusPOS.Domain.dll
