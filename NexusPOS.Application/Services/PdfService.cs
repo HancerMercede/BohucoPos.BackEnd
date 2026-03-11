@@ -19,13 +19,13 @@ public class PdfService : IPdfService
         {
             container.Page(page =>
             {
-                page.Size(PageSizes.A4);
-                page.Margin(30);
-                page.DefaultTextStyle(x => x.FontSize(11));
+                page.Size(200, 0);
+                page.Margin(10);
+                page.DefaultTextStyle(x => x.FontSize(8));
 
                 page.Header().Element(c => ComposeHeader(c, billData));
                 page.Content().Element(c => ComposeContent(c, billData));
-                page.Footer().AlignCenter().Text("Gracias por su visita - BohucoPOS");
+                page.Footer().AlignCenter().Text("Gracias por su visita").FontSize(7);
             });
         });
 
@@ -36,96 +36,64 @@ public class PdfService : IPdfService
     {
         container.Column(column =>
         {
-            column.Item().Text("BohucoPOS")
-                .FontSize(24).Bold().FontColor(Colors.Blue.Darken2);
+            column.Item().AlignCenter().Text("BohucoPOS")
+                .FontSize(14).Bold();
             
-            column.Item().Text("Sistemas de Comandas")
-                .FontSize(14).FontColor(Colors.Grey.Darken1);
+            column.Item().AlignCenter().Text("Sistemas de Comandas")
+                .FontSize(7).FontColor(Colors.Grey.Darken1);
 
-            column.Item().PaddingTop(10).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
+            column.Item().PaddingTop(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
 
-            column.Item().PaddingTop(10).Row(row =>
+            column.Item().PaddingTop(5).Column(c =>
             {
-                row.RelativeItem().Column(c =>
-                {
-                    c.Item().Text($"Cuenta: {billData.TabId}");
-                    c.Item().Text($"Cliente: {billData.CustomerName}");
-                    c.Item().Text($"Ubicación: {billData.Location}");
-                });
-
-                row.RelativeItem().AlignRight().Column(c =>
-                {
-                    c.Item().Text($"Mesero: {billData.WaiterName}");
-                    c.Item().Text($"Fecha: {billData.OpenedAt:dd/MM/yyyy}");
-                    c.Item().Text($"Hora: {billData.OpenedAt:HH:mm}");
-                });
+                c.Item().Text($"Cuenta: {billData.TabId}");
+                c.Item().Text($"Cliente: {billData.CustomerName}");
+                c.Item().Text($"Mesa: {billData.Location}");
+                c.Item().Text($"Mesero: {billData.WaiterName}");
+                c.Item().Text($"Fecha: {billData.OpenedAt:dd/MM/yyyy} {billData.OpenedAt:HH:mm}");
             });
 
-            column.Item().PaddingTop(15).Text("CUENTA")
-                .FontSize(16).Bold().FontColor(Colors.Blue.Darken2);
+            column.Item().PaddingTop(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
         });
     }
 
     private void ComposeContent(IContainer container, TabBillData billData)
     {
-        container.PaddingTop(10).Column(column =>
+        container.PaddingTop(5).Column(column =>
         {
-            column.Item().Table(table =>
+            foreach (var item in billData.Items)
             {
-                table.ColumnsDefinition(columns =>
+                column.Item().PaddingVertical(2).Column(c =>
                 {
-                    columns.ConstantColumn(40);
-                    columns.RelativeColumn(3);
-                    columns.ConstantColumn(50);
-                    columns.ConstantColumn(70);
-                    columns.ConstantColumn(70);
-                });
-
-                table.Header(header =>
-                {
-                    header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("#").Bold();
-                    header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("Producto").Bold();
-                    header.Cell().Background(Colors.Grey.Lighten3).Padding(5).AlignRight().Text("Cant").Bold();
-                    header.Cell().Background(Colors.Grey.Lighten3).Padding(5).AlignRight().Text("Precio").Bold();
-                    header.Cell().Background(Colors.Grey.Lighten3).Padding(5).AlignRight().Text("Total").Bold();
-                });
-
-                int index = 1;
-                foreach (var item in billData.Items)
-                {
-                    var bgColor = index % 2 == 0 ? Colors.White : Colors.Grey.Lighten5;
-
-                    table.Cell().Background(bgColor).Padding(5).Text(index.ToString());
-                    table.Cell().Background(bgColor).Padding(5).Column(c =>
+                    c.Item().Row(r =>
                     {
-                        c.Item().Text(item.ProductName);
-                        if (!string.IsNullOrEmpty(item.Notes))
-                            c.Item().Text($"   ({item.Notes})").FontSize(9).FontColor(Colors.Grey.Darken1);
+                        r.RelativeItem().Text($"{item.Quantity}x {item.ProductName}");
+                        r.ConstantItem(50).AlignRight().Text($"${item.Total:N2}");
                     });
-                    table.Cell().Background(bgColor).Padding(5).AlignRight().Text(item.Quantity.ToString());
-                    table.Cell().Background(bgColor).Padding(5).AlignRight().Text($"${item.UnitPrice:N2}");
-                    table.Cell().Background(bgColor).Padding(5).AlignRight().Text($"${item.Total:N2}");
+                    if (!string.IsNullOrEmpty(item.Notes))
+                        c.Item().Text($"   {item.Notes}").FontSize(7).FontColor(Colors.Grey.Darken1);
+                });
+            }
 
-                    index++;
-                }
-            });
+            column.Item().PaddingTop(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
 
-            column.Item().PaddingTop(15).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-
-            column.Item().PaddingTop(10).AlignRight().Column(c =>
+            column.Item().PaddingTop(5).Column(c =>
             {
                 c.Item().Row(r =>
                 {
                     r.RelativeItem().Text("Subtotal:");
-                    r.ConstantItem(100).AlignRight().Text($"${billData.Subtotal:N2}");
+                    r.ConstantItem(50).AlignRight().Text($"${billData.Subtotal:N2}");
                 });
-                c.Item().PaddingTop(5).Row(r =>
+                c.Item().Row(r =>
                 {
                     r.RelativeItem().Text("IVA (18%):");
-                    r.ConstantItem(100).AlignRight().Text($"${billData.Tax:N2}");
+                    r.ConstantItem(50).AlignRight().Text($"${billData.Tax:N2}");
                 });
-                c.Item().PaddingTop(10).Text($"TOTAL: ${billData.Total:N2}")
-                    .FontSize(16).Bold().FontColor(Colors.Blue.Darken2);
+                c.Item().PaddingTop(3).Row(r =>
+                {
+                    r.RelativeItem().Text("TOTAL:").Bold();
+                    r.ConstantItem(50).AlignRight().Text($"${billData.Total:N2}").Bold();
+                });
             });
         });
     }
