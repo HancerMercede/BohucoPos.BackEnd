@@ -35,10 +35,17 @@ public class TabRepository(AppDbContext context) : RepositoryBase<Tab>(context),
         return tabWithOrders;
     }
 
-    public async Task<IEnumerable<Tab>> GetActiveByLocationAsync(string location, CancellationToken ct = default)
+    public async Task<IEnumerable<Tab>> GetActiveByLocationAsync(string? location, CancellationToken ct = default)
     {
-        return await _context.Tabs
-            .Where(t => t.Location == location && t.Status != TabStatus.Closed && t.Status != TabStatus.Cancelled)
+        var query = _context.Tabs
+            .Where(t => t.Status != TabStatus.Closed && t.Status != TabStatus.Cancelled);
+
+        if (!string.IsNullOrEmpty(location))
+        {
+            query = query.Where(t => t.Location == location);
+        }
+
+        return await query
             .OrderBy(t => t.OpenedAt)
             .ToListAsync(ct);
     }

@@ -4,18 +4,18 @@ using NexusPOS.Application.Interfaces;
 
 namespace NexusPOS.Application.Queries.GetActiveTabsByLocation;
 
-public class GetActiveTabsByLocationQueryHandler(ITabRepository tabRepository) 
+public class GetActiveTabsByLocationQueryHandler(IUnitOfWork uow) 
     : IRequestHandler<GetActiveTabsByLocationQuery, IEnumerable<TabDto>>
 {
     public async Task<IEnumerable<TabDto>> Handle(GetActiveTabsByLocationQuery request, CancellationToken ct)
     {
-        var tabs = await tabRepository.GetActiveByLocationAsync(request.Location, ct);
+        var tabs = await uow.Tabs.GetActiveByLocationAsync(request.Location, ct);
         
         var result = new List<TabDto>();
         
         foreach (var tab in tabs)
         {
-            var orders = await tabRepository.GetOrdersByTabIdAsync(tab.Id, ct);
+            var orders = await uow.Tabs.GetOrdersByTabIdAsync(tab.Id, ct);
             
             decimal subtotal = 0;
             foreach (var order in orders)

@@ -4,15 +4,15 @@ using NexusPOS.Application.Interfaces;
 
 namespace NexusPOS.Application.Queries.GetTabDetails;
 
-public class GetTabDetailsQueryHandler(ITabRepository tabRepository) 
+public class GetTabDetailsQueryHandler(IUnitOfWork uow) 
     : IRequestHandler<GetTabDetailsQuery, TabDto?>
 {
     public async Task<TabDto?> Handle(GetTabDetailsQuery request, CancellationToken ct)
     {
-        var tab = await tabRepository.GetByIdAsync(request.TabId, ct);
+        var tab = await uow.Tabs.GetByIdAsync(request.TabId, ct);
         if (tab == null) return null;
 
-        var orders = await tabRepository.GetOrdersByTabIdAsync(request.TabId, ct);
+        var orders = await uow.Tabs.GetOrdersByTabIdAsync(request.TabId, ct);
             
         decimal subtotal = 0;
         foreach (var order in orders)

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.Domain\\NexusPOS.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.Domain\\NexusPOS.Domain.csproj",
       "projectName": "NexusPOS.Domain",
-      "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.Domain\\NexusPOS.Domain.csproj",
+      "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.Domain\\NexusPOS.Domain.csproj",
       "packagesPath": "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.Domain\\obj\\",
+      "outputPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\HANCER MERCEDE\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -65,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

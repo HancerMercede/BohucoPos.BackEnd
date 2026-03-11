@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AQBBKPIXiD8=",
+  "dgSpecHash": "UUZP16tKoRw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.Application\\NexusPOS.Application.csproj",
+  "projectFilePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.Application\\NexusPOS.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\mediatr\\14.1.0\\mediatr.14.1.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",

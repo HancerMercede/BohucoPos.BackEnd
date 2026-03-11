@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CcJmwOiWtd0=",
+  "dgSpecHash": "U2IYCyLXq6M=",
   "success": true,
-  "projectFilePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.API\\NexusPOS.API.csproj",
+  "projectFilePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\mediatr\\14.1.0\\mediatr.14.1.0.nupkg.sha512",

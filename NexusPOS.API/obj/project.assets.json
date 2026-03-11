@@ -2492,11 +2492,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.API\\NexusPOS.API.csproj",
+      "projectUniqueName": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
       "projectName": "NexusPOS.API",
-      "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.API\\NexusPOS.API.csproj",
+      "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
       "packagesPath": "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.API\\obj\\",
+      "outputPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\HANCER MERCEDE\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2511,11 +2511,11 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.Application\\NexusPOS.Application.csproj": {
-              "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.Application\\NexusPOS.Application.csproj"
+            "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.Application\\NexusPOS.Application.csproj": {
+              "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.Application\\NexusPOS.Application.csproj"
             },
-            "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.Infrastructure\\NexusPOS.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\NexusPOS.Infrastructure\\NexusPOS.Infrastructure.csproj"
+            "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.Infrastructure\\NexusPOS.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.Infrastructure\\NexusPOS.Infrastructure.csproj"
             }
           }
         }
@@ -2566,7 +2566,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

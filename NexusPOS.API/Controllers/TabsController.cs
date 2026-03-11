@@ -25,6 +25,10 @@ public class TabsController(IMediator mediator) : ControllerBase
     public async Task<IEnumerable<TabDto>> GetActiveByLocation(string location, CancellationToken ct)
         => await mediator.Send(new GetActiveTabsByLocationQuery(location), ct);
 
+    [HttpGet("active")]
+    public async Task<IEnumerable<TabDto>> GetAllActiveTabs(CancellationToken ct)
+        => await mediator.Send(new GetActiveTabsByLocationQuery(null!), ct);
+
     [HttpGet("{tabId:int}")]
     public async Task<TabDto?> GetTabDetails(int tabId, CancellationToken ct)
         => await mediator.Send(new GetTabDetailsQuery(tabId), ct);
