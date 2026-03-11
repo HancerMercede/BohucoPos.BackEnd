@@ -19,9 +19,9 @@ public class PdfService : IPdfService
         {
             container.Page(page =>
             {
-                page.Size(190, 0);
-                page.Margin(8);
-                page.DefaultTextStyle(x => x.FontSize(8));
+                page.Size(226, 0);
+                page.Margin(5);
+                page.DefaultTextStyle(x => x.FontSize(7));
 
                 page.Header().Element(c => ComposeHeader(c, billData));
                 page.Content().Element(c => ComposeContent(c, billData));
