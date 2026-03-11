@@ -69,7 +69,9 @@ public class TabsController(IMediator mediator, IPdfService pdfService) : Contro
             WaiterName = tabDto.WaiterName ?? "Mesero",
             OpenedAt = tabDto.OpenedAt,
             RequestedAt = DateTime.UtcNow,
-            Items = tabDto.Orders.SelectMany(o => o.Items).Select(i => new BillItem
+            Items = tabDto.Orders.SelectMany(o => o.Items)
+                .Where(i => i.Status != ItemStatus.Cancelled)
+                .Select(i => new BillItem
             {
                 ProductName = i.ProductName,
                 Quantity = i.Quantity,

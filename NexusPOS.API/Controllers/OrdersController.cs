@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NexusPOS.Application.Commands.CancelOrderItem;
 using NexusPOS.Application.Commands.CreateOrder;
 using NexusPOS.Application.Commands.UpdateOrderItemStatus;
 using NexusPOS.Application.DTOs;
@@ -32,6 +33,11 @@ public class OrdersController(IMediator mediator) : ControllerBase
             OrderItemId = itemId, 
             NewStatus = dto.Status 
         }, ct);
+
+    [HttpDelete("items/{itemId:int}")]
+    public async Task<Unit> CancelItem(int itemId, [FromBody] CancelItemDto? dto, CancellationToken ct)
+        => await mediator.Send(new CancelOrderItemCommand(itemId, dto?.Reason), ct);
 }
 
 public record UpdateStatusDto(ItemStatus Status);
+public record CancelItemDto(string? Reason = null);

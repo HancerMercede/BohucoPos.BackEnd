@@ -1,6 +1,7 @@
 using MediatR;
 using NexusPOS.Application.DTOs;
 using NexusPOS.Application.Interfaces;
+using NexusPOS.Domain.Enums;
 
 namespace NexusPOS.Application.Queries.GetTabDetails;
 
@@ -17,7 +18,7 @@ public class GetTabDetailsQueryHandler(IUnitOfWork uow)
         decimal subtotal = 0;
         foreach (var order in orders)
         {
-            foreach (var item in order.Items)
+            foreach (var item in order.Items.Where(i => i.Status != ItemStatus.Cancelled))
             {
                 subtotal += item.UnitPrice * item.Quantity;
             }

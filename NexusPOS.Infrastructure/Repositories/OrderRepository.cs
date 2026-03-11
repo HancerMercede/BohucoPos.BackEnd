@@ -24,6 +24,6 @@ public class OrderRepository : RepositoryBase<Order>, IOrderRepository
     public async Task<IEnumerable<Order>> GetPendingByDestinationAsync(ItemDestination dest, CancellationToken ct = default)
         => await _context.Orders
             .Include(o => o.Items.Where(i => i.Destination == dest))
-            .Where(o => o.Items.Any(i => i.Destination == dest && i.Status != ItemStatus.Delivered))
+            .Where(o => o.Items.Any(i => i.Destination == dest && i.Status != ItemStatus.Delivered && i.Status != ItemStatus.Cancelled))
             .ToListAsync(ct);
 }
