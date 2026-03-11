@@ -170,14 +170,14 @@ The application uses PostgreSQL with Entity Framework Core.
 
 ### Connection String
 ```
-Host=localhost;Database=nexuspos;Username=postgres;Password=nexuspos;Port=5434
+Host=localhost;Database=nexuspos;Username=<your_user>;Password=<your_password>;Port=5434
 ```
 
 ### Docker Setup
 ```bash
 docker run -d \
   --name nexuspos-db \
-  -e POSTGRES_PASSWORD=nexuspos \
+  -e POSTGRES_PASSWORD=<your_password> \
   -e POSTGRES_DB=nexuspos \
   -p 5434:5432 \
   postgres:16-alpine
@@ -276,7 +276,7 @@ Can be configured via `appsettings.json` or environment variables:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Database=nexuspos;Username=postgres;Password=nexuspos;Port=5434"
+    "DefaultConnection": "Host=localhost;Database=nexuspos;Username=<your_user>;Password=<your_password>;Port=5434"
   }
 }
 ```
