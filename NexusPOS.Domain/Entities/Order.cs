@@ -14,6 +14,7 @@ public class Order
     public OrderStatus Status { get; private set; }
     public string? TableId { get; private set; }
     public int? TabId { get; set; }
+    public Tab? Tab { get; set; }
     public string WaiterName { get; private set; } = string.Empty;
     public DateTime CreatedAt { get; private set; }
 

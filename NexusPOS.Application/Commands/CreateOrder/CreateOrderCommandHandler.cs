@@ -24,7 +24,13 @@ public class CreateOrderCommandHandler(
 
             foreach (var item in cmd.Items)
             {
-                var destination = await routing.ResolveDestinationAsync(item.ProductId, ct);
+                var destination = item.Destination;
+                
+                if (destination == default)
+                {
+                    destination = await routing.ResolveDestinationAsync(item.ProductId, ct);
+                }
+                
                 order.AddItem(item.ProductId, item.ProductName, item.UnitPrice, item.Quantity, item.Notes, destination);
             }
 

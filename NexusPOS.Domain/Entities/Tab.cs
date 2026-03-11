@@ -4,9 +4,6 @@ namespace NexusPOS.Domain.Entities;
 
 public class Tab
 {
-    private static int _tabSequence = 0;
-    private static readonly object _lock = new();
-
     public int Id { get; private set; }
     public string IdDisplay => $"TAB-{Id:D3}";
     public string Location { get; private set; } = string.Empty;
@@ -20,32 +17,18 @@ public class Tab
     public decimal TaxRate { get; private set; } = 0.18m;
     public string? Notes { get; set; }
 
-    private readonly List<Order> _orders = new();
-    public IReadOnlyCollection<Order> Orders => _orders.AsReadOnly();
+    public virtual ICollection<Order> Orders { get; private set; } = new List<Order>();
 
-    public decimal Subtotal => _orders.SelectMany(o => o.Items).Sum(i => i.UnitPrice * i.Quantity);
+    public decimal Subtotal => Orders.SelectMany(o => o.Items).Sum(i => i.UnitPrice * i.Quantity);
     public decimal Tax => Subtotal * TaxRate;
     public decimal Total => Subtotal + Tax;
 
     private Tab() { }
 
-    public static void SetSequence(int value) => _tabSequence = value;
-
-    public static int GenerateNextId()
-    {
-        lock (_lock)
-        {
-            _tabSequence++;
-            return _tabSequence;
-        }
-    }
-
     public static Tab Open(string location, string customerName, string waiterId, string waiterName, decimal taxRate = 0.18m)
     {
-        var id = GenerateNextId();
         return new Tab
         {
-            Id = id,
             Location = location,
             CustomerName = customerName,
             WaiterId = waiterId,
@@ -60,7 +43,7 @@ public class Tab
     {
         if (Status != TabStatus.Open)
             throw new InvalidOperationException("Cannot add order to a tab that is not open");
-        _orders.Add(order);
+        Orders.Add(order);
     }
 
     public void RequestBill()

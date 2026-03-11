@@ -42,9 +42,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Tab>(entity =>
         {
             entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Status).HasConversion<string>();
             entity.Property(e => e.PaymentMethod).HasConversion<string>();
-            entity.Ignore(e => e.Orders);
+            entity.HasMany(e => e.Orders)
+                .WithOne(o => o.Tab)
+                .HasForeignKey(o => o.TabId)
+                .OnDelete(DeleteBehavior.Cascade);
             entity.Ignore(e => e.Subtotal);
             entity.Ignore(e => e.Tax);
             entity.Ignore(e => e.Total);

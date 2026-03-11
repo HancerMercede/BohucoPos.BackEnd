@@ -18,4 +18,5 @@ public record OrderItemDto
     public decimal UnitPrice { get; init; }
     public int Quantity { get; init; }
     public string? Notes { get; init; }
+    public ItemDestination Destination { get; init; }
 }
