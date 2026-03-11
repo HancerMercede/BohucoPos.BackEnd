@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 
-namespace NexusPOS.API.Hubs;
+namespace NexusPOS.Application.Hubs;
 
 public class OrderHub : Hub
 {

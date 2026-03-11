@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.SignalR;
 using NexusPOS.Application.Interfaces;
-using NexusPOS.API.Hubs;
+using NexusPOS.Application.Hubs;
 
-namespace NexusPOS.API.Services;
+namespace NexusPOS.Application.Services;
 
 public class SignalRNotificationService(IHubContext<OrderHub> hub) : INotificationService
 {
