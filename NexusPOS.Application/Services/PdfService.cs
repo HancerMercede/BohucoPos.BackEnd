@@ -25,7 +25,7 @@ public class PdfService : IPdfService
 
                 page.Header().Element(c => ComposeHeader(c, billData));
                 page.Content().Element(c => ComposeContent(c, billData));
-                page.Footer().AlignCenter().Text("Gracias por su visita - BOHUCO POS");
+                page.Footer().AlignCenter().Text("Gracias por su visita - BohucoPOS");
             });
         });
 
@@ -36,10 +36,10 @@ public class PdfService : IPdfService
     {
         container.Column(column =>
         {
-            column.Item().Text("BOHUCO")
+            column.Item().Text("BohucoPOS")
                 .FontSize(24).Bold().FontColor(Colors.Blue.Darken2);
             
-            column.Item().Text("Restaurante & Bar")
+            column.Item().Text("Sistemas de Comandas")
                 .FontSize(14).FontColor(Colors.Grey.Darken1);
 
             column.Item().PaddingTop(10).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
