@@ -1,72 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using NexusPOS.Application.Commands.CreateOrder;
-using NexusPOS.Application.Interfaces;
-using NexusPOS.Application.Services;
 using NexusPOS.Application.Hubs;
-using NexusPOS.Domain.Entities;
-using NexusPOS.Infrastructure.Data;
-using NexusPOS.Infrastructure.UnitOfWork;
+using NexusPOS.API.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+var configuration = builder.Configuration;
 
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(CreateOrderCommand).Assembly));
-
-builder.Services.AddScoped<IOrderRoutingService, OrderRoutingService>();
-builder.Services.AddScoped<INotificationService, SignalRNotificationService>();
-builder.Services.AddScoped<IPdfService, PdfService>();
-
-builder.Services.AddSignalR();
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
-    });
-builder.Services.AddOpenApi();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:5175")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials()
-            .SetIsOriginAllowed(_ => true);
-    });
-});
+builder.Services.ConfigureDbContext(configuration);
+builder.Services.ConfigureUnitOfWork();
+builder.Services.ConfigureMediator();
+builder.Services.ConfiguredOtherServices();
+builder.Services.ConfigureSignalR();
+builder.Services.ConfigureControllers();
+builder.Services.ConfigureOpenApi();
+builder.Services.ConfigureCors();
 
 var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    try
-    {
-        var maxOrder = db.Orders
-            .Select(o => o.Id)
-            .OrderByDescending(x => x)
-            .FirstOrDefault();
-        Order.SetSequence(maxOrder);
-
-        var maxItem = db.OrderItems
-            .Select(i => i.Id)
-            .OrderByDescending(x => x)
-            .FirstOrDefault();
-        Order.SetItemSequence(maxItem);
-    }
-    catch
-    {
-        Order.SetSequence(0);
-        Order.SetItemSequence(0);
-    }
-}
 
 app.UseCors("AllowFrontend");
 
