@@ -1,12 +1,11 @@
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using NexusPOS.Application.Events;
-using NexusPOS.Application.DTOs;
-using NexusPOS.Application.Queries.GetPendingOrdersByDestination;
 using NexusPOS.Application.Hubs;
+using NexusPOS.Application.Queries.GetPendingOrdersByDestination;
 using NexusPOS.Domain.Enums;
 
-namespace NexusPOS.API.EventHandlers;
+namespace NexusPOS.Application.Notifications;
 
 public class OrderCreatedEventHandler(IHubContext<OrderHub> hub, IMediator mediator)
     : INotificationHandler<OrderCreatedEvent>

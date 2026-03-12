@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NexusPOS.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b69fdbfac48e05f5ef6e986bf63d0822dbef203")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+abbc810cba02a0c9ae8237c8c3cb5df1f3777616")]
 [assembly: System.Reflection.AssemblyProductAttribute("NexusPOS.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NexusPOS.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

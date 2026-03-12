@@ -10,7 +10,7 @@ public class TabRepository(AppDbContext context) : RepositoryBase<Tab>(context),
 {
     public async Task<Tab?> GetWithOrdersAsync(int tabId, CancellationToken ct = default)
     {
-        var tab = await _context.Tabs
+        var tab = await context.Tabs
             .Include(t => t.Orders)
             .ThenInclude(o => o.Items)
             .FirstOrDefaultAsync(t => t.Id == tabId, ct);
@@ -20,7 +20,7 @@ public class TabRepository(AppDbContext context) : RepositoryBase<Tab>(context),
 
     public async Task<IEnumerable<Tab>> GetActiveByLocationAsync(string? location, CancellationToken ct = default)
     {
-        var query = _context.Tabs
+        var query = context.Tabs
             .Where(t => t.Status != TabStatus.Closed && t.Status != TabStatus.Cancelled);
 
         if (!string.IsNullOrEmpty(location))
@@ -35,7 +35,7 @@ public class TabRepository(AppDbContext context) : RepositoryBase<Tab>(context),
 
     public async Task<IEnumerable<Tab>> GetOpenTabsAsync(CancellationToken ct = default)
     {
-        return await _context.Tabs
+        return await context.Tabs
             .Where(t => t.Status == TabStatus.Open || t.Status == TabStatus.Pending)
             .OrderBy(t => t.OpenedAt)
             .ToListAsync(ct);
@@ -43,7 +43,7 @@ public class TabRepository(AppDbContext context) : RepositoryBase<Tab>(context),
 
     public async Task<IEnumerable<string>> GetLocationsWithOpenTabsAsync(CancellationToken ct = default)
     {
-        return await _context.Tabs
+        return await context.Tabs
             .Where(t => t.Status == TabStatus.Open || t.Status == TabStatus.Pending)
             .Select(t => t.Location)
             .Distinct()
@@ -52,7 +52,7 @@ public class TabRepository(AppDbContext context) : RepositoryBase<Tab>(context),
 
     public async Task<IEnumerable<Order>> GetOrdersByTabIdAsync(int tabId, CancellationToken ct = default)
     {
-        return await _context.Orders
+        return await context.Orders
             .Where(o => o.TabId == tabId)
             .Include(o => o.Items)
             .OrderBy(o => o.CreatedAt)

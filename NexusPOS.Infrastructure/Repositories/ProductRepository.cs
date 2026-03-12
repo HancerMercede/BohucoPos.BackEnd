@@ -9,14 +9,14 @@ namespace NexusPOS.Infrastructure.Repositories;
 public class ProductRepository(AppDbContext context) : RepositoryBase<Product>(context), IProductRepository
 {
     public async Task<IEnumerable<Product>> GetActiveAsync(CancellationToken ct = default)
-        => await _context.Products
+        => await context.Products
             .Where(p => p.IsActive)
             .OrderBy(p => p.Category)
             .ThenBy(p => p.Name)
             .ToListAsync(ct);
 
     public async Task<IEnumerable<Product>> GetByDestinationAsync(ItemDestination destination, CancellationToken ct = default)
-        => await _context.Products
+        => await context.Products
             .Where(p => p.IsActive && p.Destination == destination)
             .OrderBy(p => p.Category)
             .ThenBy(p => p.Name)
