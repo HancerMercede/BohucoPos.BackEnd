@@ -90,5 +90,5 @@ public class TabsController(IMediator mediator, IPdfService pdfService) : Contro
     }
 }
 
-public record CloseTabDto(PaymentMethod PaymentMethod, bool DirectClose = false);
-public record CancelTabDto(string? Reason = null);
+
+

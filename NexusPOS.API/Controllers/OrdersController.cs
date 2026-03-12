@@ -39,5 +39,5 @@ public class OrdersController(IMediator mediator) : ControllerBase
         => await mediator.Send(new CancelOrderItemCommand(itemId, dto?.Reason), ct);
 }
 
-public record UpdateStatusDto(ItemStatus Status);
-public record CancelItemDto(string? Reason = null);
+
+

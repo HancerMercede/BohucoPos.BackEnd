@@ -7,7 +7,6 @@ namespace NexusPOS.Infrastructure.Repositories;
 public abstract class RepositoryBase<T>(AppDbContext context) : IRepositoryBase<T>
     where T : class
 {
-    protected readonly AppDbContext _context = context;
     private readonly DbSet<T> _dbSet = context.Set<T>();
 
     public virtual async Task<T?> GetByIdAsync<TKey>(TKey id, CancellationToken ct = default)
@@ -26,5 +25,5 @@ public abstract class RepositoryBase<T>(AppDbContext context) : IRepositoryBase<
         => _dbSet.Remove(entity);
 
     public virtual async Task SaveChangesAsync(CancellationToken ct = default)
-        => await _context.SaveChangesAsync(ct);
+        => await context.SaveChangesAsync(ct);
 }

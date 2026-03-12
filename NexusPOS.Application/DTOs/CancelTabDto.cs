@@ -1,3 +1,3 @@
 ﻿namespace NexusPOS.Application.DTOs;
 
-public record CancelTabDto();
+public record CancelTabDto(string? Reason = null);

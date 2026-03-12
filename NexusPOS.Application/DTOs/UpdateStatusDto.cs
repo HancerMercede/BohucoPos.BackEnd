@@ -1,6 +1,5 @@
-﻿namespace NexusPOS.Application.DTOs;
+﻿using NexusPOS.Domain.Enums;
 
-public class UpdateStatusDto
-{
-    
-}
+namespace NexusPOS.Application.DTOs;
+
+public record UpdateStatusDto(ItemStatus Status);

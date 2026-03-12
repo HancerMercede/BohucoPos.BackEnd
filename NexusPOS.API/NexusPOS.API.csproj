@@ -19,4 +19,8 @@
     <ProjectReference Include="..\NexusPOS.Infrastructure\NexusPOS.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ReferencePathWithRefAssemblies Update="C:\Users\HANCER MERCEDE\.nuget\packages\mediatr\14.1.0\lib\net10.0\MediatR.dll" />
+  </ItemGroup>
+
 </Project>

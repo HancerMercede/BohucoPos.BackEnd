@@ -12,7 +12,7 @@ public class CancelOrderItemCommandHandler(IUnitOfWork uow)
     {
         var item = await uow.OrderItems.GetByIdAsync(request.OrderItemId, ct);
         
-        if (item == null)
+        if (item is null)
             throw new KeyNotFoundException($"Order item {request.OrderItemId} not found");
         
         if (item.Status == ItemStatus.Cancelled)

@@ -27,7 +27,8 @@ public class UpdateOrderItemStatusCommandHandler(
             logger.LogInformation("OrderItem {ItemId} status updated to {Status}", item.Id, cmd.NewStatus);
 
             var order = await uow.Orders.GetWithItemsAsync(item.OrderId, ct);
-            if (order?.Tab != null && !string.IsNullOrEmpty(order.Tab.WaiterId))
+            
+            if (order?.Tab is not null && !string.IsNullOrEmpty(order.Tab.WaiterId))
             {
                 if (Guid.TryParse(order.Tab.WaiterId, out var waiterId))
                 {

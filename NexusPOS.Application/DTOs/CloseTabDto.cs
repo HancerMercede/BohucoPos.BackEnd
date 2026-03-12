@@ -1,3 +1,5 @@
-﻿namespace NexusPOS.Application.DTOs;
+﻿using NexusPOS.Domain.Enums;
 
-public record CloseTabDto();
+namespace NexusPOS.Application.DTOs;
+
+public record CloseTabDto(PaymentMethod PaymentMethod, bool DirectClose = false);
