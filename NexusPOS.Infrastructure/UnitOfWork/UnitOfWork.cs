@@ -14,6 +14,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly Lazy<IOrderItemRepository> _orderItems;
     private readonly Lazy<ITabRepository> _tabs;
     private readonly Lazy<IProductRepository> _products;
+    private readonly Lazy<IUserRepository> _users;
 
     public UnitOfWork(AppDbContext context)
     {
@@ -23,12 +24,14 @@ public class UnitOfWork : IUnitOfWork
         _orderItems = new Lazy<IOrderItemRepository>(() => new OrderItemRepository(_context));
         _tabs = new Lazy<ITabRepository>(() => new TabRepository(_context));
         _products = new Lazy<IProductRepository>(() => new ProductRepository(_context));
+        _users = new Lazy<IUserRepository>(() => new UserRepository(_context));
     }
 
     public IOrderRepository Orders => _orders.Value;
     public IOrderItemRepository OrderItems => _orderItems.Value;
     public ITabRepository Tabs => _tabs.Value;
     public IProductRepository Products => _products.Value;
+    public IUserRepository Users => _users.Value;
 
     public async Task BeginTransactionAsync(CancellationToken ct = default)
     {

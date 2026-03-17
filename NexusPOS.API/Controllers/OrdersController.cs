@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NexusPOS.Application.Commands.CancelOrderItem;
 using NexusPOS.Application.Commands.CreateOrder;
@@ -12,6 +13,7 @@ namespace NexusPOS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class OrdersController(IMediator mediator) : ControllerBase
 {
     [HttpPost]

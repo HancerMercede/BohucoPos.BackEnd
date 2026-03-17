@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NexusPOS.Application.Commands.AddOrderToTab;
 using NexusPOS.Application.Commands.CancelTab;
@@ -17,6 +18,7 @@ namespace NexusPOS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class TabsController(IMediator mediator, IPdfService pdfService) : ControllerBase
 {
     [HttpPost]

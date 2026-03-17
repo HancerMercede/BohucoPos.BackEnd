@@ -162,6 +162,7 @@ C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\N
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Humanizer.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\MediatR.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\MediatR.Contracts.dll
+C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.Build.Framework.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll
@@ -178,6 +179,8 @@ C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\M
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.OpenApi.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\Microsoft.VisualStudio.SolutionPersistence.dll
@@ -192,6 +195,7 @@ C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\S
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\System.Composition.Hosting.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\System.Composition.Runtime.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\System.Composition.TypedParts.dll
+C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\HANCER MERCEDE\source\repos\BohucoPost\NexusPOS.API\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.resources.dll

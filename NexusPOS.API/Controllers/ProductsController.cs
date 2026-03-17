@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NexusPOS.Application.Commands.CreateProduct;
 using NexusPOS.Application.Commands.DeleteProduct;
@@ -11,6 +12,7 @@ namespace NexusPOS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ProductsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

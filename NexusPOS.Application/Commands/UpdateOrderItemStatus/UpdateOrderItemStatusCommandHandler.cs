@@ -28,17 +28,14 @@ public class UpdateOrderItemStatusCommandHandler(
 
             var order = await uow.Orders.GetWithItemsAsync(item.OrderId, ct);
             
-            if (order?.Tab is not null && !string.IsNullOrEmpty(order.Tab.WaiterId))
+            if (order?.Tab is not null && !string.IsNullOrEmpty(order.Tab.WaiterName))
             {
-                if (Guid.TryParse(order.Tab.WaiterId, out var waiterId))
-                {
-                    await notificationService.SendToWaiterAsync(
-                        waiterId,
-                        "OrderItemStatusChanged",
-                        new { ItemId = item.Id, Status = cmd.NewStatus.ToString(), ItemName = item.ProductName },
-                        ct
-                    );
-                }
+                await notificationService.SendToWaiterAsync(
+                    order.Tab.WaiterName,
+                    "OrderItemStatusChanged",
+                    new { ItemId = item.Id, Status = cmd.NewStatus.ToString(), ItemName = item.ProductName, OrderId = order.Id },
+                    ct
+                );
             }
 
             return Unit.Value;

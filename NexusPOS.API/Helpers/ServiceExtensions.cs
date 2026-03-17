@@ -1,54 +1,96 @@
-﻿using Microsoft.EntityFrameworkCore;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NexusPOS.Application.Commands.CreateOrder;
 using NexusPOS.Application.Interfaces;
 using NexusPOS.Application.Services;
 using NexusPOS.Infrastructure.Data;
+using NexusPOS.Infrastructure.Services;
 using NexusPOS.Infrastructure.UnitOfWork;
 
 namespace NexusPOS.API.Helpers;
 
 public static class ServiceExtensions
 {
+    public static void ConfigureDbContext(IServiceCollection services, IConfiguration configuration) =>
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-    extension(IServiceCollection services)
+    public static void ConfigureUnitOfWork(IServiceCollection services)
+        => services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+    public static void ConfigureMediator(IServiceCollection services) => services.AddMediatR(cfg =>
+        cfg.RegisterServicesFromAssembly(typeof(CreateOrderCommand).Assembly));
+
+    public static void ConfigureJwt(IServiceCollection services, IConfiguration configuration)
     {
-        public void ConfigureDbContext(IConfiguration configuration) =>
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        services.AddScoped<IJwtService, JwtService>();
 
-        public void ConfigureUnitOfWork()
-            => services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-        public void ConfigureMediator() => services.AddMediatR(cfg =>
-            cfg.RegisterServicesFromAssembly(typeof(CreateOrderCommand).Assembly));
-
-        public void ConfiguredOtherServices()
-        {
-            services.AddScoped<IOrderRoutingService, OrderRoutingService>();
-            services.AddScoped<INotificationService, SignalRNotificationService>();
-            services.AddScoped<IPdfService, PdfService>();
-        }
-        
-        public void ConfigureSignalR()=> services.AddSignalR();
-        
-        public void ConfigureControllers() => services.AddControllers()
-            .AddJsonOptions(options =>
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
-                options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["Jwt:Issuer"],
+                    ValidAudience = configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!))
+                };
+                
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
-        public void ConfigureOpenApi() => services.AddOpenApi();
-        
-        
-        public void ConfigureCors() => services.AddCors(options =>
-        {
-            options.AddPolicy("AllowFrontend", policy =>
-            {
-                policy.WithOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:5175")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
-            });
-        });
+        services.AddAuthorization();
     }
+
+    public static void ConfigureOtherServices(IServiceCollection services)
+    {
+        services.AddScoped<IOrderRoutingService, OrderRoutingService>();
+        services.AddScoped<INotificationService, SignalRNotificationService>();
+        services.AddScoped<IPdfService, PdfService>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
+    }
+
+    public static void ConfigureSignalR(IServiceCollection services) => services.AddSignalR()
+        .AddJsonProtocol(options =>
+        {
+            options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+        });
+
+    public static void ConfigureControllers(IServiceCollection services) => services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+        });
+
+    public static void ConfigureOpenApi(IServiceCollection services) => services.AddOpenApi();
+
+
+    public static void ConfigureCors(IServiceCollection services) => services.AddCors(options =>
+    {
+        options.AddPolicy("AllowFrontend", policy =>
+        {
+            policy.WithOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:5175")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+    });
 }

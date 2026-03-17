@@ -2,5 +2,5 @@ namespace NexusPOS.Application.Interfaces;
 
 public interface INotificationService
 {
-    Task SendToWaiterAsync(Guid waiterId, string method, object? data, CancellationToken ct = default);
+    Task SendToWaiterAsync(string waiterUsername, string method, object? data, CancellationToken ct = default);
 }

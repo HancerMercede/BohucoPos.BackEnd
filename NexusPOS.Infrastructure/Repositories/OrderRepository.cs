@@ -11,6 +11,7 @@ public class OrderRepository(AppDbContext context) : RepositoryBase<Order>(conte
     public async Task<Order?> GetWithItemsAsync(int orderId, CancellationToken ct = default)
         => await context.Orders
             .Include(o => o.Items)
+            .Include(o => o.Tab)
             .FirstOrDefaultAsync(o => o.Id == orderId, ct);
 
     public async Task<IEnumerable<Order>> GetByTableAsync(string tableId, CancellationToken ct = default)
