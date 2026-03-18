@@ -144,7 +144,71 @@ Real-time order status updates for kitchen/bar displays.
 
 **Events:**
 - `OrderCreated` - New order placed
-- `OrderItemStatusChanged` - Item status updated
+- `OrderUpdated` - Order updated
+- `OrderItemStatusChanged` - Item status updated (notifies waiters)
+
+### Authentication Controller (`/api/auth`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register new user |
+| POST | `/api/auth/login` | Login and get JWT token |
+
+### Products Controller (`/api/products`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/products` | Get all products (filtered by destination) |
+| GET | `/api/products/{id}` | Get product by ID |
+| POST | `/api/products` | Create new product (Admin) |
+| PUT | `/api/products/{id}` | Update product (Admin) |
+| DELETE | `/api/products/{id}` | Delete product (Admin) |
+
+### Dashboard Controller (`/api/dashboard`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/dashboard/sales` | Sales analytics with date range |
+| GET | `/api/dashboard/low-inventory` | Products with low stock |
+
+Requires JWT authentication and Admin role.
+
+### PDF Controller (`/api/pdf`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/pdf/bill/{tabId}` | Generate PDF bill for a tab |
+
+Returns a PDF document with tab details, all orders, items, and totals. Requires JWT authentication.
+
+### SignalR Hub (`/hubs/orders`) - JWT Auth
+
+Real-time order status updates with JWT authentication.
+
+**Connection:**
+```
+/hubs/orders?token=<jwt_token>
+```
+
+**Methods:**
+- `JoinWaiterGroup(waiterName)` - Waiter joins their personal notification group
+- `OrderItemStatusChanged(tabId, waiterName, itemName, newStatus)` - Broadcast to waiter's group
+
+**Events received:**
+- `OrderCreated` - New order placed
+- `OrderUpdated` - Order updated
+- `OrderItemStatusChanged` - Item status updated (notifies specific waiter)
+
+### Role-Based Access Control
+
+| Role | Access |
+|------|--------|
+| **Waiter** | Tabs, Orders |
+| **Kitchen** | Order updates via SignalR |
+| **Bar** | Order updates via SignalR |
+| **Admin** | Products CRUD, Dashboard, PDF |
+
+Protected endpoints require valid JWT token with matching role claim.
 
 ## Commands & Queries (MediatR)
 
@@ -242,8 +306,24 @@ dotnet test
 - Fallback to routing service if not provided
 
 ### Real-time Updates
-- SignalR hub for live order status
+- SignalR hub with JWT authentication for live order status
 - Kitchen and bar displays can subscribe to updates
+- Waiters receive notifications when their order items are ready
+
+### Role-Based Access
+- JWT tokens contain role claims
+- Waiter: Tabs and orders management
+- Kitchen/Bar: View and update order items
+- Admin: Products CRUD, Dashboard analytics, PDF generation
+
+### PDF Bill Generation
+- Generate professional PDF bills for closed tabs
+- Includes all orders, items with quantities and notes
+- Full tax breakdown (18% ITBIS)
+
+### Dashboard & Analytics
+- Sales analytics with date range filtering
+- Low inventory alerts for products
 
 ## Project Structure Details
 
@@ -297,6 +377,25 @@ When running in development mode, OpenAPI documentation is available at:
 
 ## Version History
 
+### [1.3.0] - 2026-03-18
+
+**Added - PDF Bill Generation**
+- New PDF controller with `/api/pdf/bill/{tabId}` endpoint
+- Uses QuestPDF library to generate professional bills
+- Includes tab details, all orders, items with notes, subtotal, tax, and total
+
+**Added - Role-Based Access Control**
+- JWT authentication with role claims (Waiter, Kitchen, Bar, Admin)
+- SignalR JWT authentication support
+- Admin-only endpoints for Products and Dashboard
+
+**Added - Sales Analytics**
+- Dashboard endpoint for sales analytics with date range filtering
+- Low inventory report endpoint
+
+**Fixed**
+- SignalR waiter notifications now include Tab relationship for proper broadcasting
+
 ### [1.2.1] - 2026-03-11
 
 **Added - Item Destination (Kitchen/Bar)**
@@ -333,7 +432,7 @@ Implemented full account/tab functionality:
 
 ## Version
 
-Current version: **1.2.1**
+Current version: **1.3.0**
 
 ## License
 
