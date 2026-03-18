@@ -1,5 +1,6 @@
 using NexusPOS.Application.Hubs;
 using NexusPOS.API.Helpers;
+using NexusPOS.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ ServiceExtensions.ConfigureCors(builder.Services);
 
 var app = builder.Build();
 
+app.UseExceptionHandling();
 app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
