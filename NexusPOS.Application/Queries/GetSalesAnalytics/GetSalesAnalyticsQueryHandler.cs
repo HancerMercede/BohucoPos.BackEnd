@@ -8,35 +8,32 @@ public class GetSalesAnalyticsQueryHandler(IUnitOfWork unitOfWork) : IRequestHan
 {
     public async Task<SalesAnalyticsDto> Handle(GetSalesAnalyticsQuery request, CancellationToken ct)
     {
-        var startDate = request.StartDate ?? DateTime.UtcNow.Date.AddDays(-7);
-        var endDate = request.EndDate ?? DateTime.UtcNow;
+        var startDate = (request.StartDate ?? DateTime.UtcNow.AddDays(-7).Date).ToUniversalTime();
+        var endDate = (request.EndDate ?? DateTime.UtcNow).ToUniversalTime();
 
-        var tabs = await unitOfWork.Tabs.GetAllAsync(ct);
-        var orders = await unitOfWork.Orders.GetAllAsync(ct);
+        var closedTabs = await unitOfWork.Tabs.GetClosedTabsWithOrdersAsync(startDate, endDate, ct);
+        var tabList = closedTabs.ToList();
 
-        var closedTabs = tabs
-            .Where(t => t.Status == Domain.Enums.TabStatus.Closed && 
-                       t.ClosedAt >= startDate && 
-                       t.ClosedAt <= endDate)
-            .ToList();
+        var calculateTotal = (Domain.Entities.Tab tab) =>
+        {
+            var subtotal = tab.Orders.SelectMany(o => o.Items).Sum(i => i.UnitPrice * i.Quantity);
+            return subtotal * 1.18m;
+        };
 
-        var tabOrders = orders
-            .Where(o => o.TabId.HasValue && closedTabs.Any(t => t.Id == o.TabId))
-            .ToList();
-
-        var dailySales = closedTabs
+        var dailySales = tabList
             .GroupBy(t => t.ClosedAt!.Value.Date)
             .Select(g => new DailySalesDto
             {
                 Date = g.Key,
-                TotalRevenue = g.Sum(t => t.Total),
-                OrderCount = g.Count(),
-                AverageTicket = g.Average(t => t.Total)
+                TotalRevenue = g.Sum(t => calculateTotal(t)),
+                OrderCount = g.Sum(t => t.Orders.Count),
+                AverageTicket = g.Average(t => calculateTotal(t))
             })
             .OrderBy(d => d.Date)
             .ToList();
 
-        var productSales = tabOrders
+        var productSales = tabList
+            .SelectMany(t => t.Orders)
             .SelectMany(o => o.Items)
             .GroupBy(i => i.ProductName)
             .Select(g => new ProductSalesDto
@@ -49,24 +46,24 @@ public class GetSalesAnalyticsQueryHandler(IUnitOfWork unitOfWork) : IRequestHan
             .Take(10)
             .ToList();
 
-        var waiterSales = closedTabs
+        var waiterSales = tabList
             .GroupBy(t => t.WaiterName)
             .Select(g => new WaiterPerformanceDto
             {
                 WaiterName = g.Key,
-                OrderCount = tabOrders.Count(o => o.WaiterName == g.Key),
-                TotalRevenue = g.Sum(t => t.Total)
+                OrderCount = g.Sum(t => t.Orders.Count),
+                TotalRevenue = g.Sum(t => calculateTotal(t))
             })
             .OrderByDescending(w => w.TotalRevenue)
             .ToList();
 
-        var paymentBreakdown = closedTabs
+        var paymentBreakdown = tabList
             .GroupBy(t => t.PaymentMethod)
             .Select(g => new PaymentMethodDto
             {
                 Method = g.Key?.ToString() ?? "Unknown",
                 Count = g.Count(),
-                Total = g.Sum(t => t.Total)
+                Total = g.Sum(t => calculateTotal(t))
             })
             .ToList();
 
@@ -74,9 +71,9 @@ public class GetSalesAnalyticsQueryHandler(IUnitOfWork unitOfWork) : IRequestHan
         {
             StartDate = startDate,
             EndDate = endDate,
-            TotalRevenue = closedTabs.Sum(t => t.Total),
-            TotalOrders = closedTabs.Count,
-            AverageTicket = closedTabs.Any() ? closedTabs.Average(t => t.Total) : 0,
+            TotalRevenue = tabList.Sum(t => calculateTotal(t)),
+            TotalOrders = tabList.Sum(t => t.Orders.Count),
+            AverageTicket = tabList.Any() ? tabList.Average(t => calculateTotal(t)) : 0,
             DailySales = dailySales,
             TopProducts = productSales,
             WaiterPerformance = waiterSales,

@@ -58,4 +58,13 @@ public class TabRepository(AppDbContext context) : RepositoryBase<Tab>(context),
             .OrderBy(o => o.CreatedAt)
             .ToListAsync(ct);
     }
+
+    public async Task<IEnumerable<Tab>> GetClosedTabsWithOrdersAsync(DateTime startDate, DateTime endDate, CancellationToken ct = default)
+    {
+        return await context.Tabs
+            .Include(t => t.Orders)
+            .ThenInclude(o => o.Items)
+            .Where(t => t.Status == TabStatus.Closed && t.ClosedAt >= startDate && t.ClosedAt <= endDate)
+            .ToListAsync(ct);
+    }
 }
