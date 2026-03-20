@@ -19,10 +19,8 @@ public class UpdateProductCommandHandler(IUnitOfWork uow) : IRequestHandler<Upda
         product.ProductType = request.Dto.ProductType;
         product.Emoji = request.Dto.Emoji;
         
-        if (request.Dto.ProductType == ProductType.Physical)
-            product.StockQuantity = request.Dto.StockQuantity;
-        else
-            product.StockQuantity = null;
+        product.StockQuantity = request.Dto.ProductType == ProductType.Physical 
+            ? request.Dto.StockQuantity : null;
 
         uow.Products.Update(product);
         await uow.CommitAsync(ct);

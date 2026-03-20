@@ -8,11 +8,11 @@ public class RequestBillCommandHandler(IUnitOfWork uow) : IRequestHandler<Reques
     public async Task<Unit> Handle(RequestBillCommand request, CancellationToken ct)
     {
         var tabEntity = await uow.Tabs.GetByIdAsync(request.TabId, ct);
-        if (tabEntity == null)
+        if (tabEntity is null)
             throw new InvalidOperationException("Tab not found");
 
         var tab = await uow.Tabs.GetWithOrdersAsync(request.TabId, ct);
-        if (tab == null)
+        if (tab is null)
             throw new InvalidOperationException("Tab not found");
 
         tab.RequestBill();
