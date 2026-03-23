@@ -33,18 +33,24 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
     ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && dotnet tool install --global dotnet-ef
 
 # Copy published files
 COPY --from=publish /app/publish .
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 # Set environment
 ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV DOTNET_RUNNING_IN_CONTAINER=true
+ENV PATH="${PATH}:/root/.dotnet"
 
 # Expose port
 EXPOSE 8080
 
 # Entry point
-ENTRYPOINT ["dotnet", "NexusPOS.API.dll"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
