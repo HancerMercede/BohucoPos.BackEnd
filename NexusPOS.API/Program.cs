@@ -16,7 +16,7 @@ ServiceExtensions.ConfigureOtherServices(builder.Services);
 ServiceExtensions.ConfigureSignalR(builder.Services);
 ServiceExtensions.ConfigureControllers(builder.Services);
 ServiceExtensions.ConfigureOpenApi(builder.Services);
-ServiceExtensions.ConfigureCors(builder.Services);
+ServiceExtensions.ConfigureCors(builder.Services, configuration);
 
 var app = builder.Build();
 

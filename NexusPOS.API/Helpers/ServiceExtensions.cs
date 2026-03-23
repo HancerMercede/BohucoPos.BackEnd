@@ -83,14 +83,20 @@ public static class ServiceExtensions
     public static void ConfigureOpenApi(IServiceCollection services) => services.AddOpenApi();
 
 
-    public static void ConfigureCors(IServiceCollection services) => services.AddCors(options =>
+    public static void ConfigureCors(IServiceCollection services, IConfiguration configuration) 
     {
-        options.AddPolicy("AllowFrontend", policy =>
+        var allowedOrigins = configuration.GetSection("AllowedOrigins").Get<string[]>() 
+            ?? new[] { "http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:8081" };
+        
+        services.AddCors(options =>
         {
-            policy.WithOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:8081")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
+            options.AddPolicy("AllowFrontend", policy =>
+            {
+                policy.WithOrigins(allowedOrigins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
         });
-    });
+    }
 }
