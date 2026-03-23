@@ -44,7 +44,7 @@ services:
   # NOTE: Clone both repos using 'main' branch for deployment
   frontend:
     build:
-      context: ../BohucoPos.FrontEnd
+      context: ../../BohucoPos.FrontEnd/NexusPOS.Frontend
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ${API_URL:-}
