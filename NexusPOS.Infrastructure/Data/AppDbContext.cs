@@ -11,15 +11,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Tab> Tabs => Set<Tab>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<User> Users => Set<User>();
-
-    public static AppDbContext Create()
-    {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql("Host=localhost;Database=nexuspos;Username=postgres;Password=nexuspos;Port=5434")
-            .Options;
-        return new AppDbContext(options);
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Product>(entity =>
