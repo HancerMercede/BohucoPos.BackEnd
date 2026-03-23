@@ -29,7 +29,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 
 WORKDIR /app
 
-# Install timezone data and SSL certificates
+# Install timezone data and SSL certificates, and EF Core tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
     ca-certificates \
@@ -38,10 +38,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Copy published files
 COPY --from=publish /app/publish .
-
-# Copy entrypoint script
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
 
 # Set environment
 ENV ASPNETCORE_URLS=http://+:8080
@@ -53,4 +49,4 @@ ENV PATH="${PATH}:/root/.dotnet"
 EXPOSE 8080
 
 # Entry point
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["dotnet", "NexusPOS.API.dll"]
