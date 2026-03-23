@@ -97,29 +97,51 @@ password authentication failed for user "nexuspos"
 
 ---
 
-## Final Working Configuration
+## Final Working Configuration (March 23, 2026 - Updated)
 
-### Database (Docker)
+### Docker Deployment
+| Service | Port | Description |
+|---------|------|-------------|
+| nexuspos-db-docker | 5436 | PostgreSQL for Docker deployment |
+| nexuspos-api | 5001 | .NET API |
+| nexuspos-frontend | 8081 | React Frontend |
+| nexuspos-nginx | 80 | Reverse Proxy |
+
+### Database Credentials
 ```
-Container: nexuspos-db
-Port: 5435 (mapped from internal 5432)
+Container: nexuspos-db-docker
+Port: 5436 (external), 5432 (internal)
 Database: nexuspos
 User: nexuspos
 Password: temppassword123
 ```
 
-### Connection String (appsettings.json)
+### Connection Strings (appsettings.json)
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Database=nexuspos;Username=nexuspos;Password=temppassword123;Port=5435"
+    "DefaultConnection": "Host=localhost;Database=nexuspos;Username=nexuspos;Password=temppassword123;Port=5435",
+    "DockerConnection": "Host=nexuspos-db;Database=nexuspos;Username=nexuspos;Password=temppassword123;Port=5432"
   }
 }
 ```
 
-### API Running
-- Local development: `dotnet run` on port 5001
-- Connects to Docker PostgreSQL on port 5435
+### Tables Created in Docker DB
+- OrderItems
+- Orders
+- Products
+- Tabs
+- Users
+- __EFMigrationsHistory
+
+### Running the Deployment
+```bash
+cd deploy
+docker-compose up -d --build
+
+# Apply migrations
+dotnet ef database update --connection "Host=localhost;Database=nexuspos;Username=nexuspos;Password=temppassword123;Port=5436"
+```
 
 ---
 
