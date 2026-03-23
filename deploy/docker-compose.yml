@@ -41,6 +41,7 @@ services:
       - nexuspos-network
 
   # Frontend (served by Nginx)
+  # NOTE: Clone both repos using 'main' branch for deployment
   frontend:
     build:
       context: ../BohucoPos.FrontEnd/NexusPOS.Frontend
