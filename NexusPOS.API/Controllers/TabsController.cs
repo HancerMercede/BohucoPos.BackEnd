@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NexusPOS.Application.Commands.AddOrderToTab;
 using NexusPOS.Application.Commands.CancelTab;
@@ -17,6 +18,7 @@ namespace NexusPOS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class TabsController(IMediator mediator, IPdfService pdfService) : ControllerBase
 {
     [HttpPost]
@@ -69,12 +71,15 @@ public class TabsController(IMediator mediator, IPdfService pdfService) : Contro
             WaiterName = tabDto.WaiterName ?? "Mesero",
             OpenedAt = tabDto.OpenedAt,
             RequestedAt = DateTime.UtcNow,
-            Items = tabDto.Orders.SelectMany(o => o.Items).Select(i => new BillItem
+            Items = tabDto.Orders.SelectMany(o => o.Items)
+                .Where(i => i.Status != ItemStatus.Cancelled)
+                .Select(i => new BillItem
             {
                 ProductName = i.ProductName,
                 Quantity = i.Quantity,
                 UnitPrice = i.UnitPrice,
-                Notes = i.Notes
+                Notes = i.Notes,
+                Destination = i.Destination.ToString()
             }).ToList()
         };
 
@@ -83,9 +88,9 @@ public class TabsController(IMediator mediator, IPdfService pdfService) : Contro
         billData.Total = billData.Subtotal + billData.Tax;
 
         var pdfBytes = pdfService.GenerateBillPdf(billData);
-        return File(pdfBytes, "application/pdf", "cuenta_" + billData.TabId + ".pdf");
+        return File(pdfBytes, "application/pdf", "cuenta_" + billData.Location + ".pdf");
     }
 }
 
-public record CloseTabDto(PaymentMethod PaymentMethod, bool DirectClose = false);
-public record CancelTabDto(string? Reason = null);
+
+

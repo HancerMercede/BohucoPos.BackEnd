@@ -5,5 +5,6 @@ public enum ItemStatus
     Pending,
     Preparing,
     Ready,
-    Delivered
+    Delivered,
+    Cancelled
 }

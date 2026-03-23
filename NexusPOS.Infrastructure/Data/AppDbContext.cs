@@ -9,20 +9,21 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<Tab> Tabs => Set<Tab>();
-
-    public static AppDbContext Create()
-    {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql("Host=localhost;Database=nexuspos;Username=postgres;Password=nexuspos;Port=5434")
-            .Options;
-        return new AppDbContext(options);
-    }
-
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<User> Users => Set<User>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Destination).HasConversion<string>();
+            entity.Property(e => e.ProductType).HasConversion<string>();
+        });
+
         modelBuilder.Entity<Order>(entity =>
         {
             entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.OrderType).HasConversion<string>();
             entity.Property(e => e.Status).HasConversion<string>();
             entity.HasMany(e => e.Items)
@@ -35,6 +36,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<OrderItem>(entity =>
         {
             entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Destination).HasConversion<string>();
             entity.Property(e => e.Status).HasConversion<string>();
         });
@@ -52,6 +54,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             entity.Ignore(e => e.Subtotal);
             entity.Ignore(e => e.Tax);
             entity.Ignore(e => e.Total);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.HasIndex(e => e.Username).IsUnique();
         });
     }
 }

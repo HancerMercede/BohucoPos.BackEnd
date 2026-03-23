@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,6 +18,10 @@
   <ItemGroup>
     <ProjectReference Include="..\NexusPOS.Application\NexusPOS.Application.csproj" />
     <ProjectReference Include="..\NexusPOS.Infrastructure\NexusPOS.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ReferencePathWithRefAssemblies Update="C:\Users\HANCER MERCEDE\.nuget\packages\mediatr\14.1.0\lib\net10.0\MediatR.dll" />
   </ItemGroup>
 
 </Project>
