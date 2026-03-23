@@ -46,7 +46,7 @@ services:
       context: C:/Users/HANCER MERCEDE/source/repos/BohucoPos-FrontEnd/NexusPOS.Frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: ${API_URL:-http://localhost:5001}
+        VITE_API_URL: ${API_URL:-}
     container_name: nexuspos-frontend
     restart: unless-stopped
     ports:
