@@ -29,11 +29,15 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 
 WORKDIR /app
 
-# Install timezone data and SSL certificates
+# Install timezone data, SSL certificates, and EF tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
     ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && dotnet tool install --global dotnet-ef --version 10.0.0
+
+# Add EF tools to PATH
+ENV PATH="${PATH}:/root/.dotnet/tools"
 
 # Copy published files
 COPY --from=publish /app/publish .
