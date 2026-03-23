@@ -351,6 +351,44 @@ docker-compose up -d --build
 
 ---
 
+## Desarrollo Local
+
+### Archivos de Configuración
+
+| Ambiente | Backend | Frontend |
+|----------|---------|----------|
+| Production | `appsettings.json` | `.env` (vacío) |
+| Development | `appsettings.Development.json` | `.env.development` |
+
+### Ejecutar Backend Local
+
+```bash
+# Puerto 5001
+# Base de datos: localhost:5435
+cd NexusPOS.API
+dotnet run
+```
+
+### Ejecutar Frontend Local
+
+```bash
+# Puerto 5173 (Vite)
+cd NexusPOS.Frontend
+
+# Copiar .env.development a .env si es necesario
+cp .env.development .env
+
+yarn dev
+```
+
+### Notas de Puertos
+
+- **Docker Production**: PostgreSQL en puerto 5436
+- **Local Development**: PostgreSQL en puerto 5435
+- El CORS se configura automáticamente según el ambiente desde `AllowedOrigins` en appsettings
+
+---
+
 ## Contacto de Soporte
 
 Si hay errores no resueltos, revisar:
