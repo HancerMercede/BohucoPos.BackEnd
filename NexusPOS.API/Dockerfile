@@ -29,12 +29,11 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 
 WORKDIR /app
 
-# Install timezone data and SSL certificates, and EF Core tools
+# Install timezone data and SSL certificates
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
     ca-certificates \
-    && rm -rf /var/lib/apt/lists/* \
-    && dotnet tool install --global dotnet-ef
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy published files
 COPY --from=publish /app/publish .
@@ -43,7 +42,6 @@ COPY --from=publish /app/publish .
 ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV DOTNET_RUNNING_IN_CONTAINER=true
-ENV PATH="${PATH}:/root/.dotnet"
 
 # Expose port
 EXPOSE 8080
