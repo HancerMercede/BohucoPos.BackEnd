@@ -112,12 +112,18 @@ services:
 # Ir a la carpeta de deploy
 cd /root/bohucopos/BohucoPos.BackEnd/deploy
 
+# Si hay imágenes corrupta, eliminar todo primero:
+docker-compose down -v --rmi all
+docker system prune -af
+
 # Construir y levantar servicios
 docker-compose up -d --build
 
 # Ver estado de servicios
 docker-compose ps
 ```
+
+**Nota:** Las migraciones de base de datos se ejecutan automáticamente al iniciar la API (no necesitas ejecutarlas manualmente).
 
 ---
 
