@@ -25,7 +25,7 @@ services:
   # Backend API (.NET)
   api:
     build:
-      context: C:/Users/HANCER MERCEDE/source/repos/BohucoPost
+      context: ..
       dockerfile: NexusPOS.API/Dockerfile
     container_name: nexuspos-api
     restart: unless-stopped
@@ -43,7 +43,7 @@ services:
   # Frontend (served by Nginx)
   frontend:
     build:
-      context: C:/Users/HANCER MERCEDE/source/repos/BohucoPos-FrontEnd/NexusPOS.Frontend
+      context: ../BohucoPos.FrontEnd/NexusPOS.Frontend
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ${API_URL:-}
