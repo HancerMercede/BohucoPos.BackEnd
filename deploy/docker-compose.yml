@@ -86,8 +86,12 @@ services:
       - nexuspos-network
 
 volumes:
+  # IMPORTANT: Do NOT use 'docker-compose down -v' as it will delete the database!
+  # Use 'docker-compose down' or 'docker-compose stop' to preserve data
   nexuspos_docker_data:
+    name: nexuspos_db_data
   seq_data:
+    name: nexuspos_seq_data
 
 networks:
   nexuspos-network:

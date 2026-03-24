@@ -215,6 +215,56 @@ environment:
 
 ---
 
+## Issue 12: Database Data Lost on Container Destroy
+
+### Problem
+Database data is lost when containers are destroyed because volumes need to be persisted.
+
+### Resolution
+- **DO NOT use** `docker-compose down -v` (the `-v` flag removes volumes)
+- **USE** `docker-compose down` without `-v` to preserve data
+- **OR USE** `docker-compose stop` and `docker-compose start` to restart without destroying
+
+### Important Commands
+```bash
+# ✅ Correct - keeps database data
+docker-compose down
+docker-compose stop
+docker-compose start
+
+# ❌ Wrong - deletes database data
+docker-compose down -v
+```
+
+### Volume Configuration
+The database already has a persistent volume:
+```yaml
+volumes:
+  - nexuspos_docker_data:/var/lib/postgresql/data
+```
+
+### Problem
+Seq container couldn't start because port 5341 was already in use on the local machine (Windows).
+
+### Errors
+```
+Ports are not available: exposing port TCP 0.0.0.0:5341 -> 0.0.0.0:0: listen tcp 0.0.0.0:5341: bind: An attempt was made to access a socket in a way forbidden by its access permissions.
+```
+
+### Resolution
+- For local development: Use `docker logs nexuspos-api -f` instead of Seq
+- For production: Seq will work because port 5341 is free on the droplet
+- Alternative: Use `SEQ_URL` environment variable to connect to external Seq
+
+### Configuration
+```yaml
+# docker-compose.yml
+environment:
+  Seq__Url: ${SEQ_URL:-http://nexuspos-seq:5341}
+```
+
+---
+
 ## Final Working Configuration (March 24, 2026 - Updated)
 
 ### Problem
