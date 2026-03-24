@@ -112,8 +112,12 @@ services:
 # Ir a la carpeta de deploy
 cd /root/bohucopos/BohucoPos.BackEnd/deploy
 
+# ⚠️ IMPORTANTE: NO usar 'docker-compose down -v' 
+# El flag '-v' BORRA la base de datos!
+# Usar solo 'down' sin -v para preservar los datos
+
 # Si hay imágenes corrupta, eliminar todo primero:
-docker-compose down -v --rmi all
+docker-compose down --rmi all
 docker system prune -af
 
 # Construir y levantar servicios
@@ -217,10 +221,14 @@ docker-compose logs -f nexuspos-db-docker
 docker-compose restart api
 docker-compose restart nginx
 
-# Detener todos los servicios
+# ✅ CORRECTO: Detener servicios pero сохранить datos
 docker-compose down
 
-# Detener y eliminar volúmenes (CUIDADO: borra datos)
+# ✅ CORRECTO: Detener y levantar sin perder datos
+docker-compose stop
+docker-compose start
+
+# ❌ WRONG: Esto borra la base de datos!
 docker-compose down -v
 
 # Reconstruir y levantar
@@ -300,16 +308,22 @@ docker logs nexuspos-frontend
 # Conectar al droplet
 ssh root@134.209.165.233
 
-# Ir a las carpetas y hacer pull
+# Backend
 cd /root/bohucopos/BohucoPos.BackEnd
-git pull origin development
+git fetch origin
+git reset --hard origin/development
 
-cd /root/bohucopos/BohucoPos.FrontEnd  
-git pull origin main  # o development
+# Frontend
+cd /root/bohucopos/BohucoPos.FrontEnd
+git fetch origin
+git reset --hard origin/development
 
-# Reconstruir y levantar
+# Reconstruir y levantar (SIN -v)
 cd /root/bohucopos/BohucoPos.BackEnd/deploy
 docker-compose up -d --build
+
+# ⚠️ NO usar: docker-compose down -v
+# ✅ Usar: docker-compose down o docker-compose stop/start
 ```
 
 ---
