@@ -97,6 +97,190 @@ password authentication failed for user "nexuspos"
 
 ---
 
+## Issue 7: Frontend Build Context Path
+
+### Problem
+Docker Compose couldn't find the frontend source code because of incorrect build context path.
+
+### Errors
+```
+ERROR: build path /root/bohucopos/BohucoPos-FrontEnd/NexusPOS.Frontend either does not exist, is not accessible, or is not a valid URL
+```
+
+### Resolution
+- Use `../../BohucoPos.FrontEnd` (not `../../BohucoPos-FrontEnd/NexusPOS.Frontend`)
+- The path is relative from `deploy/docker-compose.yml`
+
+### Folder Structure Expected
+```
+/opt/
+├── BohucoPost/
+│   └── deploy/
+│       └── docker-compose.yml
+└── BohucoPos.FrontEnd/    ← Note: no hyphen, no NexusPOS.Frontend subfolder
+    └── (frontend files)
+```
+
+---
+
+## Issue 8: SignalR Connection Failed (Hardcoded URL)
+
+### Problem
+Frontend was trying to connect to SignalR at hardcoded `https://localhost:7089` instead of using the proxy.
+
+### Errors
+```
+POST https://localhost:7089/hubs/orders/negotiate net::ERR_CONNECTION_REFUSED
+Failed to complete negotiation with the server: TypeError: Failed to fetch
+```
+
+### Resolution
+- Updated `.env.development` with relative URLs:
+  ```
+  VITE_API_URL=/api
+  VITE_SIGNALR_URL=/hubs/orders
+  ```
+- Updated `src/config.ts`: `const API_URL = import.meta.env.VITE_API_URL || '';`
+
+### Files Modified
+- `NexusPOS.Frontend/.env.development`
+- `NexusPOS.Frontend/src/config.ts`
+
+---
+
+## Issue 9: Duplicate /api/api/ Path
+
+### Problem
+API requests were going to `/api/api/auth/login` instead of `/api/auth/login`.
+
+### Errors
+```
+POST http://localhost/api/api/auth/login 404 (Not Found)
+```
+
+### Resolution
+- Changed `config.ts` default from `'/api'` to `''`:
+  ```typescript
+  const API_URL = import.meta.env.VITE_API_URL || '';
+  ```
+
+### Files Modified
+- `NexusPOS.Frontend/src/config.ts`
+
+---
+
+## Issue 10: Nginx Proxy Path Duplication
+
+### Problem
+Nginx was stripping `/api` prefix when proxying to backend, causing 404s.
+
+### Errors
+- Request: `/api/auth/login`
+- Backend received: `/auth/login` (missing /api)
+
+### Resolution
+- Updated `deploy/nginx.conf`:
+  ```nginx
+  location /api/ {
+      proxy_pass http://api_backend/api/;  # Keep /api/ prefix
+  }
+  ```
+
+### Files Modified
+- `deploy/nginx.conf`
+
+---
+
+## Issue 11: Seq Port 5341 Already in Use (Local Development)
+
+### Problem
+Seq container couldn't start because port 5341 was already in use on the local machine (Windows).
+
+### Errors
+```
+Ports are not available: exposing port TCP 0.0.0.0:5341 -> 0.0.0.0:0: listen tcp 0.0.0.0:5341: bind: An attempt was made to access a socket in a way forbidden by its access permissions.
+```
+
+### Resolution
+- For local development: Use `docker logs nexuspos-api -f` instead of Seq
+- For production: Seq will work because port 5341 is free on the droplet
+- Alternative: Use `SEQ_URL` environment variable to connect to external Seq
+
+### Configuration
+```yaml
+# docker-compose.yml
+environment:
+  Seq__Url: ${SEQ_URL:-http://nexuspos-seq:5341}
+```
+
+---
+
+## Issue 12: Database Data Lost on Container Destroy
+
+### Problem
+Database data is lost when containers are destroyed because volumes need to be persisted.
+
+### Resolution
+- **DO NOT use** `docker-compose down -v` (the `-v` flag removes volumes)
+- **USE** `docker-compose down` without `-v` to preserve data
+- **OR USE** `docker-compose stop` and `docker-compose start` to restart without destroying
+
+### Important Commands
+```bash
+# ✅ Correct - keeps database data
+docker-compose down
+docker-compose stop
+docker-compose start
+
+# ❌ Wrong - deletes database data
+docker-compose down -v
+```
+
+### Volume Configuration
+The database already has a persistent volume:
+```yaml
+volumes:
+  - nexuspos_docker_data:/var/lib/postgresql/data
+```
+
+### Problem
+Seq container couldn't start because port 5341 was already in use on the local machine (Windows).
+
+### Errors
+```
+Ports are not available: exposing port TCP 0.0.0.0:5341 -> 0.0.0.0:0: listen tcp 0.0.0.0:5341: bind: An attempt was made to access a socket in a way forbidden by its access permissions.
+```
+
+### Resolution
+- For local development: Use `docker logs nexuspos-api -f` instead of Seq
+- For production: Seq will work because port 5341 is free on the droplet
+- Alternative: Use `SEQ_URL` environment variable to connect to external Seq
+
+### Configuration
+```yaml
+# docker-compose.yml
+environment:
+  Seq__Url: ${SEQ_URL:-http://nexuspos-seq:5341}
+```
+
+---
+
+## Final Working Configuration (March 24, 2026 - Updated)
+
+### Problem
+Password authentication kept failing due to wrong credentials.
+
+### Errors
+```
+password authentication failed for user "nexuspos"
+```
+
+### Resolution
+- Verified correct credentials from Docker environment variables
+- Updated appsettings.json with correct values
+
+---
+
 ## Final Working Configuration (March 23, 2026 - Updated)
 
 ### Docker Deployment
@@ -106,6 +290,7 @@ password authentication failed for user "nexuspos"
 | nexuspos-api | 5001 | .NET API |
 | nexuspos-frontend | 8081 | React Frontend |
 | nexuspos-nginx | 80 | Reverse Proxy |
+| nexuspos-seq | 5341 | Seq Logging Server (production only |
 
 ### Database Credentials
 ```
