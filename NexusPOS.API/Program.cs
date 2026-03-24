@@ -3,8 +3,22 @@ using NexusPOS.API.Helpers;
 using NexusPOS.API.Middleware;
 using NexusPOS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var seqUrl = builder.Configuration.GetValue<string>("Seq:Url") ?? "http://localhost:5341";
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Seq(seqUrl)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 var configuration = builder.Configuration;
 
@@ -19,6 +33,8 @@ ServiceExtensions.ConfigureOpenApi(builder.Services);
 ServiceExtensions.ConfigureCors(builder.Services, configuration);
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 app.UseExceptionHandling();
 app.UseCors("AllowFrontend");

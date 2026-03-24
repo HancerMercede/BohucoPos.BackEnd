@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NexusPOS.Application.Commands.CreateOrder;
+using NexusPOS.Application.Hubs;
 using NexusPOS.Application.Interfaces;
 using NexusPOS.Application.Services;
 using NexusPOS.Infrastructure.Data;
@@ -72,6 +73,10 @@ public static class ServiceExtensions
         .AddJsonProtocol(options =>
         {
             options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+        })
+        .AddHubOptions<OrderHub>(options =>
+        {
+            options.EnableDetailedErrors = true;
         });
 
     public static void ConfigureControllers(IServiceCollection services) => services.AddControllers()
