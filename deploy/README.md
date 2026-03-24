@@ -182,6 +182,61 @@ After first deployment:
 
 ---
 
+## Historial de Cambios / Traceability
+
+### 2026-03-24 - Seq Observability Integration
+
+**Objetivo**: Agregar observabilidad centralized con Seq
+
+**Cambios realizados**:
+
+| Componente | Archivo | Descripción |
+|------------|---------|-------------|
+| Backend | `NexusPOS.API/Program.cs` | + Serilog + Seq config, request logging middleware |
+| Backend | `NexusPOS.API/Helpers/ServiceExtensions.cs` | + OrderHub using, hub options |
+| Backend | `NexusPOS.API/NexusPOS.API.csproj` | + Serilog.AspNetCore, Serilog.Sinks.Seq packages |
+| Backend | `NexusPOS.API/appsettings.json` | + Seq config (production) |
+| Backend | `NexusPOS.API/appsettings.Development.json` | + Seq config (development) |
+| Frontend | `NexusPOS.Frontend/src/config.ts` | API_URL default `''` para evitar `/api/api/` |
+| Frontend | `NexusPOS.Frontend/.env.development` | URLs relativas `/api`, `/hubs/orders` |
+| Deploy | `deploy/docker-compose.yml` | + Seq service, Seq env var |
+| Deploy | `deploy/nginx.conf` | Fix `/api/` proxy path |
+
+**Commits**:
+- `3168abd` - Add Seq observability with Serilog integration (backend)
+- `3299677` - Fix API URL config for Docker deployment (frontend)
+
+**Ramas**:
+- Backend: `feature/seq-observability` → `development`
+- Frontend: `main`
+
+### Issues Resueltos
+- SignalR connection failed (7089 hardcoded URL en build)
+- `/api/api/` duplicate path (API_URL config)
+- Nginx proxy path incorrecto
+
+---
+
+## Observability (Seq)
+
+Seq está configurado para centralized logging.
+
+### Acceso en Producción
+```
+http://<droplet-ip>:5341
+```
+
+### Ver Logs en Desarrollo Local
+```bash
+docker logs nexuspos-api -f
+```
+
+### Configuración
+- **Producción**: Seq corre en contenedor Docker (`nexuspos-seq:5341`)
+- **Desarrollo**: Usar `docker logs` directamente
+
+---
+
 ## Cost Estimate
 
 | Item | Monthly Cost |
