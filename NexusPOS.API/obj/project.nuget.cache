@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "i96L7iYL1MY=",
+  "dgSpecHash": "SKPLG2e+364=",
   "success": true,
   "projectFilePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
   "expectedPackageFiles": [
@@ -25,6 +25,7 @@
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.4\\microsoft.entityframeworkcore.analyzers.10.0.4.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.entityframeworkcore.design\\10.0.4\\microsoft.entityframeworkcore.design.10.0.4.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.4\\microsoft.entityframeworkcore.relational.10.0.4.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.1.0\\microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.4\\microsoft.extensions.dependencymodel.10.0.4.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.14.0\\microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.14.0\\microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
@@ -56,20 +57,8 @@
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.composition.hosting\\9.0.0\\system.composition.hosting.9.0.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.composition.runtime\\9.0.0\\system.composition.runtime.9.0.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512",
-    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.14.0\\system.identitymodel.tokens.jwt.8.14.0.nupkg.sha512"
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.14.0\\system.identitymodel.tokens.jwt.8.14.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.net.websockets.websocketprotocol\\5.1.0\\system.net.websockets.websocketprotocol.5.1.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "message": "NexusPOS.API depends on Serilog.Sinks.Seq (>= 8.0.1) but Serilog.Sinks.Seq 8.0.1 was not found. Serilog.Sinks.Seq 9.0.0 was resolved instead.",
-      "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
-      "libraryId": "Serilog.Sinks.Seq",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }

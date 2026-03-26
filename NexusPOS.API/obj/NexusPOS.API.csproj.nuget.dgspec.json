@@ -75,7 +75,7 @@
             },
             "Serilog.Sinks.Seq": {
               "target": "Package",
-              "version": "[8.0.1, )"
+              "version": "[9.0.0, )"
             }
           },
           "imports": [
@@ -571,9 +571,17 @@
               "target": "Package",
               "version": "[1.1.0, )"
             },
-            "QuestPDF": {
+            "Microsoft.AspNetCore.WebSockets": {
               "target": "Package",
-              "version": "[2024.10.3, )"
+              "version": "[2.3.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "System.Net.WebSockets.WebSocketProtocol": {
+              "target": "Package",
+              "version": "[5.1.0, )"
             }
           },
           "imports": [
@@ -1275,6 +1283,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[10.0.0, )"
+            },
+            "QuestPDF": {
+              "target": "Package",
+              "version": "[2024.10.3, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
