@@ -808,11 +808,21 @@
           }
         }
       },
+      "System.Net.WebSockets.WebSocketProtocol/5.1.0": {
+        "runtime": {
+          "lib/net6.0/System.Net.WebSockets.WebSocketProtocol.dll": {
+            "assemblyVersion": "5.1.0.0",
+            "fileVersion": "5.100.24.56208"
+          }
+        }
+      },
       "NexusPOS.Application/1.0.0": {
         "dependencies": {
           "FluentValidation": "11.11.0",
           "MediatR": "14.1.0",
-          "NexusPOS.Domain": "1.0.0"
+          "Newtonsoft.Json": "13.0.3",
+          "NexusPOS.Domain": "1.0.0",
+          "System.Net.WebSockets.WebSocketProtocol": "5.1.0"
         },
         "runtime": {
           "NexusPOS.Application.dll": {
@@ -1211,6 +1221,13 @@
       "sha512": "sha512-EYGgN/S+HK7S6F3GaaPLFAfK0UzMrkXFyWCvXpQWFYmZln3dqtbyIO7VuTM/iIIPMzkelg8ZLlBPvMhxj6nOAA==",
       "path": "system.identitymodel.tokens.jwt/8.14.0",
       "hashPath": "system.identitymodel.tokens.jwt.8.14.0.nupkg.sha512"
+    },
+    "System.Net.WebSockets.WebSocketProtocol/5.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cVTT/Zw4JuUeX8H0tdWii0OMHsA5MY2PaFYOq/Hstw0jk479jZ+f8baCicWFNzJlCPWAe0uoNCELoB5eNmaMqA==",
+      "path": "system.net.websockets.websocketprotocol/5.1.0",
+      "hashPath": "system.net.websockets.websocketprotocol.5.1.0.nupkg.sha512"
     },
     "NexusPOS.Application/1.0.0": {
       "type": "project",

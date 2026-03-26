@@ -721,7 +721,7 @@
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
             "related": ".xml"
           }
         },
@@ -1120,13 +1120,31 @@
           }
         }
       },
+      "System.Net.WebSockets.WebSocketProtocol/5.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/System.Net.WebSockets.WebSocketProtocol.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Net.WebSockets.WebSocketProtocol.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "NexusPOS.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "FluentValidation": "11.11.0",
           "MediatR": "14.1.0",
-          "NexusPOS.Domain": "1.0.0"
+          "Newtonsoft.Json": "13.0.3",
+          "NexusPOS.Domain": "1.0.0",
+          "System.Net.WebSockets.WebSocketProtocol": "5.1.0"
         },
         "compile": {
           "bin/placeholder/NexusPOS.Application.dll": {}
@@ -3317,6 +3335,29 @@
         "system.identitymodel.tokens.jwt.nuspec"
       ]
     },
+    "System.Net.WebSockets.WebSocketProtocol/5.1.0": {
+      "sha512": "cVTT/Zw4JuUeX8H0tdWii0OMHsA5MY2PaFYOq/Hstw0jk479jZ+f8baCicWFNzJlCPWAe0uoNCELoB5eNmaMqA==",
+      "type": "package",
+      "path": "system.net.websockets.websocketprotocol/5.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "buildTransitive/net461/System.Net.WebSockets.WebSocketProtocol.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Net.WebSockets.WebSocketProtocol.targets",
+        "lib/net462/System.Net.WebSockets.WebSocketProtocol.dll",
+        "lib/net462/System.Net.WebSockets.WebSocketProtocol.xml",
+        "lib/net6.0/System.Net.WebSockets.WebSocketProtocol.dll",
+        "lib/net6.0/System.Net.WebSockets.WebSocketProtocol.xml",
+        "lib/netstandard2.0/System.Net.WebSockets.WebSocketProtocol.dll",
+        "lib/netstandard2.0/System.Net.WebSockets.WebSocketProtocol.xml",
+        "system.net.websockets.websocketprotocol.5.1.0.nupkg.sha512",
+        "system.net.websockets.websocketprotocol.nuspec"
+      ]
+    },
     "NexusPOS.Application/1.0.0": {
       "type": "project",
       "path": "../NexusPOS.Application/NexusPOS.Application.csproj",
@@ -3342,7 +3383,7 @@
       "NexusPOS.Application >= 1.0.0",
       "NexusPOS.Infrastructure >= 1.0.0",
       "Serilog.AspNetCore >= 8.0.3",
-      "Serilog.Sinks.Seq >= 8.0.1"
+      "Serilog.Sinks.Seq >= 9.0.0"
     ]
   },
   "packageFolders": {
@@ -3419,7 +3460,7 @@
           },
           "Serilog.Sinks.Seq": {
             "target": "Package",
-            "version": "[8.0.1, )"
+            "version": "[9.0.0, )"
           }
         },
         "imports": [
@@ -3858,17 +3899,5 @@
         }
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "NexusPOS.API depends on Serilog.Sinks.Seq (>= 8.0.1) but Serilog.Sinks.Seq 8.0.1 was not found. Serilog.Sinks.Seq 9.0.0 was resolved instead.",
-      "libraryId": "Serilog.Sinks.Seq",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  }
 }
