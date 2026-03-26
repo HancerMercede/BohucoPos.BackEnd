@@ -1,8 +1,11 @@
 using NexusPOS.Application.Hubs;
+using NexusPOS.Application.Validators;
 using NexusPOS.API.Helpers;
 using NexusPOS.API.Middleware;
 using NexusPOS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Serilog;
 using Serilog.Events;
 
@@ -31,6 +34,8 @@ ServiceExtensions.ConfigureSignalR(builder.Services);
 ServiceExtensions.ConfigureControllers(builder.Services);
 ServiceExtensions.ConfigureOpenApi(builder.Services);
 ServiceExtensions.ConfigureCors(builder.Services, configuration);
+ServiceExtensions.ConfigureFluentValidation(builder.Services);
+
 
 var app = builder.Build();
 
