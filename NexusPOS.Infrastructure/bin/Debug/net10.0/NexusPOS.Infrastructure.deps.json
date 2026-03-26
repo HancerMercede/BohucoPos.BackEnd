@@ -16,6 +16,7 @@
           "NexusPOS.Application": "1.0.0",
           "NexusPOS.Domain": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.0",
+          "QuestPDF": "2024.10.3",
           "System.IdentityModel.Tokens.Jwt": "8.14.0"
         },
         "runtime": {
@@ -1048,8 +1049,7 @@
           "FluentValidation": "11.11.0",
           "MediatR": "14.1.0",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
-          "NexusPOS.Domain": "1.0.0",
-          "QuestPDF": "2024.10.3"
+          "NexusPOS.Domain": "1.0.0"
         },
         "runtime": {
           "NexusPOS.Application.dll": {

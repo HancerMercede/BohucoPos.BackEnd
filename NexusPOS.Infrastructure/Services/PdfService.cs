@@ -1,10 +1,9 @@
 using QuestPDF.Fluent;
-using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using NexusPOS.Application.DTOs;
 using NexusPOS.Application.Interfaces;
 
-namespace NexusPOS.Application.Services;
+namespace NexusPOS.Infrastructure.Services;
 
 public class PdfService : IPdfService
 {

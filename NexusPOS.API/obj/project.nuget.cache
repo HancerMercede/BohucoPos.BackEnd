@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "i96L7iYL1MY=",
+  "dgSpecHash": "3YEWXKi3uVs=",
   "success": true,
   "projectFilePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
   "expectedPackageFiles": [
@@ -25,6 +25,7 @@
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.4\\microsoft.entityframeworkcore.analyzers.10.0.4.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.entityframeworkcore.design\\10.0.4\\microsoft.entityframeworkcore.design.10.0.4.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.4\\microsoft.entityframeworkcore.relational.10.0.4.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.1.0\\microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.4\\microsoft.extensions.dependencymodel.10.0.4.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.14.0\\microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.14.0\\microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
