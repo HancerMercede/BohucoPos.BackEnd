@@ -16,4 +16,10 @@ public class UserRepository(AppDbContext context) : RepositoryBase<User>(context
         await context.SaveChangesAsync(ct);
         return user;
     }
+
+    public async Task UpdateAsync(User user, CancellationToken ct = default)
+    {
+        context.Users.Update(user);
+        await context.SaveChangesAsync(ct);
+    }
 }

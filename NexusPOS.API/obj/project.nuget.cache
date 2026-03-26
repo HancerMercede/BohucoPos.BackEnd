@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "HXVIAwgxRW0=",
+  "dgSpecHash": "i96L7iYL1MY=",
   "success": true,
   "projectFilePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\mediatr\\14.1.0\\mediatr.14.1.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
@@ -35,6 +39,16 @@
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\npgsql\\10.0.0\\npgsql.10.0.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\10.0.0\\npgsql.entityframeworkcore.postgresql.10.0.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\questpdf\\2024.10.3\\questpdf.2024.10.3.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.aspnetcore\\8.0.3\\serilog.aspnetcore.8.0.3.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.extensions.hosting\\8.0.0\\serilog.extensions.hosting.8.0.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.extensions.logging\\8.0.0\\serilog.extensions.logging.8.0.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.formatting.compact\\2.0.0\\serilog.formatting.compact.2.0.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.settings.configuration\\8.0.4\\serilog.settings.configuration.8.0.4.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.sinks.console\\5.0.0\\serilog.sinks.console.5.0.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.sinks.debug\\2.0.0\\serilog.sinks.debug.2.0.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.sinks.file\\6.0.0\\serilog.sinks.file.6.0.0.nupkg.sha512",
+    "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\serilog.sinks.seq\\9.0.0\\serilog.sinks.seq.9.0.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.composition.attributedmodel\\9.0.0\\system.composition.attributedmodel.9.0.0.nupkg.sha512",
@@ -44,5 +58,18 @@
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512",
     "C:\\Users\\HANCER MERCEDE\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.14.0\\system.identitymodel.tokens.jwt.8.14.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "message": "NexusPOS.API depends on Serilog.Sinks.Seq (>= 8.0.1) but Serilog.Sinks.Seq 8.0.1 was not found. Serilog.Sinks.Seq 9.0.0 was resolved instead.",
+      "projectPath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\HANCER MERCEDE\\source\\repos\\BohucoPost\\NexusPOS.API\\NexusPOS.API.csproj",
+      "libraryId": "Serilog.Sinks.Seq",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

@@ -1,4 +1,6 @@
 using System.Text;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -6,6 +8,7 @@ using NexusPOS.Application.Commands.CreateOrder;
 using NexusPOS.Application.Hubs;
 using NexusPOS.Application.Interfaces;
 using NexusPOS.Application.Services;
+using NexusPOS.Application.Validators;
 using NexusPOS.Infrastructure.Data;
 using NexusPOS.Infrastructure.Services;
 using NexusPOS.Infrastructure.UnitOfWork;
@@ -103,5 +106,11 @@ public static class ServiceExtensions
                     .AllowCredentials();
             });
         });
+    }
+
+    public static void ConfigureFluentValidation(IServiceCollection services)
+    {
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
     }
 }
