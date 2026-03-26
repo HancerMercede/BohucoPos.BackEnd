@@ -18,7 +18,7 @@ public class AuthController(IUnitOfWork unitOfWork, IJwtService jwtService, IPas
     {
         var existing = await _unitOfWork.Users.GetByUsernameAsync(request.Username, ct);
         if (existing is not null)
-            return BadRequest("Username already exists");
+            return BadRequest(new ErrorResponse("Username already exists"));
 
         var user = new User
         {
@@ -42,10 +42,10 @@ public class AuthController(IUnitOfWork unitOfWork, IJwtService jwtService, IPas
         var user = await _unitOfWork.Users.GetByUsernameAsync(request.Username, ct);
         
         if (user is null || !_passwordHasher.Verify(request.Password, user.PasswordHash))
-            return Unauthorized("Invalid credentials");
+            return Unauthorized(new ErrorResponse("Invalid credentials"));
 
         if (!user.IsActive)
-            return Unauthorized("User is inactive");
+            return Unauthorized(new ErrorResponse("User is inactive"));
 
         var token = _jwtService.GenerateToken(user.Username, user.Role);
 
