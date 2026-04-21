@@ -37,6 +37,7 @@ ServiceExtensions.ConfigureCors(builder.Services, configuration);
 ServiceExtensions.ConfigureFluentValidation(builder.Services);
 
 
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();

@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using NexusPOS.Application.DTOs;
-using NexusPOS.Application.Interfaces;
-using NexusPOS.Domain.Entities;
-
 namespace NexusPOS.API.Controllers;
 
 [ApiController]
@@ -14,7 +9,7 @@ public class AuthController(IUnitOfWork unitOfWork, IJwtService jwtService, IPas
     {
         var existing = await unitOfWork.Users.GetByUsernameAsync(request.Username, ct);
         if (existing is not null)
-            return BadRequest(new ErrorResponse("Username already exists"));
+            return BadRequest(new ErrorResponse("Username already exists", "The username is already in use."));
 
         var user = new User
         {
@@ -24,7 +19,7 @@ public class AuthController(IUnitOfWork unitOfWork, IJwtService jwtService, IPas
             Role = request.Role ?? "Waiter"
         };
 
-        await unitOfWork.Users.AddAsync(user, ct);
+        await unitOfWork.Users.AddUserAsync(user, ct);
         await unitOfWork.CommitAsync(ct);
 
         var token = jwtService.GenerateToken(user.Username, user.Role);
@@ -38,7 +33,7 @@ public class AuthController(IUnitOfWork unitOfWork, IJwtService jwtService, IPas
         var user = await unitOfWork.Users.GetByUsernameAsync(request.Username, ct);
         
         if (user is null || !passwordHasher.Verify(request.Password, user.PasswordHash))
-            return Unauthorized(new ErrorResponse("Invalid credentials"));
+            return Unauthorized(new ErrorResponse("Invalid credentials", "check your credentials."));
 
         if (!user.IsActive)
             return Unauthorized(new ErrorResponse("User is inactive"));
@@ -46,7 +41,7 @@ public class AuthController(IUnitOfWork unitOfWork, IJwtService jwtService, IPas
         if (!user.PasswordHash.StartsWith("$2"))
         {
             user.PasswordHash = passwordHasher.Hash(request.Password);
-            await unitOfWork.Users.UpdateAsync(user, ct);
+            await unitOfWork.Users.UpdateUserAsync(user, ct);
         }
 
         var token = jwtService.GenerateToken(user.Username, user.Role);
